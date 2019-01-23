@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/danielthestranger/spring-heroku-template.svg?style=svg)](https://circleci.com/gh/danielthestranger/spring-heroku-template)
+
 # Summary
 
 This is a Java Spring project template for deployment to Heroku's free tier, which only supports Postgres databases.
