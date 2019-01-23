@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/danielthestranger/spring-heroku-template.svg?style=svg)](https://circleci.com/gh/danielthestranger/spring-heroku-template)
+[![CircleCI](https://circleci.com/gh/danielthestranger/spring-heroku-template.svg?style=svg&circle-token=c336da9619500a7cef80c8877801feaf3067ad17)](https://circleci.com/gh/danielthestranger/spring-heroku-template)
 
 # Summary
 
