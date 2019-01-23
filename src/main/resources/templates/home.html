@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="th-fragments :: head" />
+</head>
+<body>
+<div class="container" role="main">
+    <nav th:replace="th-fragments :: nav"></nav>
+    <div class="page-header">
+        <h2>Home</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Home, sweet home!</p>
+        </div>
+    </div>
+
+</div>
+<script th:replace="th-fragments :: bootstrapscripts"></script>
+</body>
+</html>
