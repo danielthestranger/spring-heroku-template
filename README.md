@@ -53,3 +53,5 @@ Heroku provides some magic environment variables automatically, whenever a Postg
 
 # CircleCI
 
+Follow:
+https://circleci.com/docs/2.0/deployment-integrations/#heroku
