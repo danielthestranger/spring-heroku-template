@@ -11,19 +11,31 @@ import java.util.Set;
 @Getter
 @Setter
 public class AppUser {
+
   @Id
-  @Column(length = 100)
+  private Long id;
+
+  @Column(length = 100, unique = true)
   private String username;
+
   private String password;
+  private String name;
   private Boolean enabled;
+  private Boolean isAdmin;
+
+  @Column(unique = true)
+  private String email;
+  
+  @Column(unique = true)
+  private String phoneNumber;
+
   @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(
       name = "app_user_authority",
-      joinColumns = {@JoinColumn(name = "username")},
+      joinColumns = {@JoinColumn(name = "id")},
       inverseJoinColumns = {@JoinColumn(name = "authority")}
   )
   private Set<Authority> authorities;
-
 
   public AppUser() {
     this.authorities = new HashSet<>();
