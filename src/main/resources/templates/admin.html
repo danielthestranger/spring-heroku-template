@@ -10,7 +10,16 @@
 <br>
 <h5>Service types</h5>
 <a th:each="servicetype : ${ServiceTypes}" class="buttonP"
-   th:href="@{${'/admin/' + servicetype.id + '/editCohort'}}"
+   th:href="@{${'/admin/' + servicetype.id + '/editServiceType'}}"
    th:text="${servicetype.name}"></a>
+<h6>Edit or add new Service type:</h6>
+<form id="servicetype" action="#" th:action="@{/admin/addServiceType}" th:object="${newServicetype}" method="post">
+  <input type="hidden" name="servicetypeid" th:value="${newServicetype.id}"/>
+  <input type="text" name="newServiceType" th:value="${newServicetype.name}"/>
+  <input type="submit" value="Submit"/>
+  <a th:if="${newServicetype.name} != null" class="button"
+     th:href="'/admin/' + ${newServicetype.id} + '/deleteServiceType'">Delete</a>
+  <a th:if="${newServicetype.name} != null" class="button" href="/admin/">Cancel</a>
+</form>
 </body>
 </html>

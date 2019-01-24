@@ -8,4 +8,10 @@ public interface ServiceTypeService {
 
   List<ServiceType> findAll();
   void saveServiceType(ServiceType serviceType);
+
+  void deleteServiceType(Long id);
+
+  ServiceType findById(Long id);
+
+  ServiceType findCreateOrUpdate(String newName, Long id);
 }
