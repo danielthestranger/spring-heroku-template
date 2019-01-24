@@ -8,4 +8,6 @@ import java.util.List;
 public interface ServiceTypeRepository extends CrudRepository<ServiceType, Long> {
 
   List<ServiceType> findAll();
+
+  ServiceType findByName(String newName);
 }
