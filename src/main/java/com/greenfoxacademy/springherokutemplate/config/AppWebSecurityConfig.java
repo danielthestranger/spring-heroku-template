@@ -46,7 +46,7 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/home/**")
                     .hasAuthority("ROLE_USER")
-                .antMatchers("/", "/**")
+                .antMatchers("/", "/**", "/search", "/search/**")
                     .permitAll()
             .and()
                 .formLogin()
