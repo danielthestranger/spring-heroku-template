@@ -13,23 +13,22 @@ import java.util.List;
 public class Location {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
+
   private String name;
+
   @OneToOne(cascade = {CascadeType.ALL})
   private Address address;
-  @OneToMany(cascade = {CascadeType.ALL})
-  private List<AtariCalendar> atariCalendarList;
 
-  public Location() {
-    this.atariCalendarList = new ArrayList<>();
-  }
+  @OneToMany(mappedBy = "location")
+  private List<AtariCalendar> atariCalendars = new ArrayList<>();
+
 
   public Location(String name, Address address, List<AtariCalendar> atariCalendarList) {
-    this();
     this.name = name;
     this.address = address;
-    this.atariCalendarList = atariCalendarList;
+    this.atariCalendars = atariCalendarList;
   }
 
 }

@@ -1,5 +1,6 @@
 package com.greenfoxacademy.springherokutemplate.config;
 
+import com.greenfoxacademy.springherokutemplate.model.security.KnownAuthorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import javax.sql.DataSource;
 
 
@@ -32,10 +32,12 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .usersByUsernameQuery(
                         "select username, password, enabled from app_user " +
-                                "where username=?")
+                        "where username=?")
                 .authoritiesByUsernameQuery(
-                        "select username, authority from app_user_authority " +
-                                "where username=?")
+                        "select app_user.username, app_user_authority.authority " +
+                        "from app_user_authority inner join " +
+                        "app_user on app_user_authority.id = app_user.id " +
+                        "where username=?")
                 .passwordEncoder(encoder())
         ;
     }
@@ -45,13 +47,13 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/home/**")
-                    .hasAuthority("ROLE_USER")
+                    .hasAuthority(KnownAuthorities.ROLE_USER)
                 .antMatchers("/", "/**", "/search", "/search/**")
                     .permitAll()
             .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home/")
+                .defaultSuccessUrl("/home")
             .and()
                 .logout()
         ;

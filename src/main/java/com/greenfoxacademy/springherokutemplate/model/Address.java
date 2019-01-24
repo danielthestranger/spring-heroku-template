@@ -16,12 +16,14 @@ import javax.persistence.Id;
 public class Address {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
+
   private String city;
   private String street;
   private String houseNumber;
   private String zipCode;
+
 
   public Address(String city, String street, String houseNumber, String zipCode) {
     this.city = city;
