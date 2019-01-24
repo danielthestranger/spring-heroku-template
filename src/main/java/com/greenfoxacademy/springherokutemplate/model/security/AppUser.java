@@ -13,13 +13,14 @@ import java.util.Set;
 public class AppUser {
 
   @Id
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
 
   @Column(length = 100, unique = true)
   private String username;
 
   private String password;
-  private String name;
+  private String fullName;
   private Boolean enabled;
   private Boolean isAdmin;
 
@@ -29,16 +30,15 @@ public class AppUser {
   @Column(unique = true)
   private String phoneNumber;
 
-  @ManyToMany(cascade = {CascadeType.ALL})
+  @ManyToMany
   @JoinTable(
       name = "app_user_authority",
       joinColumns = {@JoinColumn(name = "id")},
       inverseJoinColumns = {@JoinColumn(name = "authority")}
   )
-  private Set<Authority> authorities;
+  private Set<Authority> authorities = new HashSet<>();
 
-  public AppUser() {
-    this.authorities = new HashSet<>();
+  private AppUser() {
   }
 
   public AppUser(String username, String password, Boolean enabled) {

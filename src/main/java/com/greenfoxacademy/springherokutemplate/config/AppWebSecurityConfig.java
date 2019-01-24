@@ -1,5 +1,6 @@
 package com.greenfoxacademy.springherokutemplate.config;
 
+import com.greenfoxacademy.springherokutemplate.model.security.KnownAuthorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import javax.sql.DataSource;
 
 
@@ -17,45 +17,47 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-  @Bean
-  public PasswordEncoder encoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-        .jdbcAuthentication()
-        .dataSource(dataSource)
-        .usersByUsernameQuery(
-            "select username, password, enabled from app_user " +
-                "where username=?")
-        .authoritiesByUsernameQuery(
-            "select username, authority from app_user_authority " +
-                "where username=?")
-        .passwordEncoder(encoder())
-    ;
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "select username, password, enabled from app_user " +
+                        "where username=?")
+                .authoritiesByUsernameQuery(
+                        "select app_user.username, app_user_authority.authority " +
+                        "from app_user_authority inner join " +
+                        "app_user on app_user_authority.id = app_user.id " +
+                        "where username=?")
+                .passwordEncoder(encoder())
+        ;
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-        .authorizeRequests()
-        .antMatchers("/home/**")
-        .hasAuthority("ROLE_USER")
-        .antMatchers("/", "/**", "/search", "/search/**")
-        .permitAll()
-        .and()
-        .formLogin()
-        .loginPage("/login")
-        .defaultSuccessUrl("/home/")
-        .and()
-        .logout()
-    ;
-  }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/home/**")
+                    .hasAuthority(KnownAuthorities.ROLE_USER)
+                .antMatchers("/", "/**", "/search", "/search/**")
+                    .permitAll()
+            .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/home")
+            .and()
+                .logout()
+        ;
+    }
 }
 
 

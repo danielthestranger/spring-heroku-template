@@ -15,12 +15,18 @@ import java.util.Set;
 public class AtariCalendar {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
-  @ManyToOne(cascade = {CascadeType.ALL})
+
+  @ManyToOne
   private ServiceType serviceType;
-  @ManyToOne(cascade = {CascadeType.ALL})
+
+  @ManyToOne
   private AtariProvider atariProvider;
+
+  @ManyToOne
+  private Location location;
+
   private String comment;
 
   @ElementCollection
@@ -29,6 +35,7 @@ public class AtariCalendar {
           joinColumns = @JoinColumn(name = "ataricalendar_id")
   )
   private Set<TimeSlot> timeSlotSet = new HashSet<>();
+
 
   public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
     this.serviceType = serviceType;

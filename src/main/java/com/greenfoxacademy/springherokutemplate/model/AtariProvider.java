@@ -13,12 +13,14 @@ import javax.persistence.*;
 public class AtariProvider {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(generator = "ID_GENERATOR")
   private Long id;
-  private String name;
 
+  private String description;
 
-  public AtariProvider(String name) {
-    this.name = name;
+  //This can be linked to a user if necessary, if any service providers are also app users
+
+  public AtariProvider(String description) {
+    this.description = description;
   }
 }
