@@ -17,4 +17,6 @@ build/
 
 # Visual Studio Code folder
 .vscode
-
+.classpath
+.project
+.settings
