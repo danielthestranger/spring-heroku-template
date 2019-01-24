@@ -28,4 +28,12 @@ public class TimeSlot {
 
   protected TimeSlot() { }
 
+
+  public AtariCalendar getAtariCalendar() {
+    return atariCalendar;
+  }
+
+  public void setAtariCalendar(AtariCalendar atariCalendar) {
+    this.atariCalendar = atariCalendar;
+  }
 }
