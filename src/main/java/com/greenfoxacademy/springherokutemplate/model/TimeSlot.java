@@ -3,7 +3,12 @@ package com.greenfoxacademy.springherokutemplate.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
+
+import com.greenfoxacademy.springherokutemplate.model.security.AppUser;
 
 @Getter
 @Setter
@@ -13,8 +18,13 @@ public class TimeSlot {
   @org.hibernate.annotations.Parent
   private AtariCalendar atariCalendar;
 
-  boolean isBooked;
-  String comments;
+  private Timestamp beginTime;
+  private Timestamp endTime;
+  private boolean isBooked;
+  private String comments;
+
+  @ManyToOne
+  private AppUser appUser;
 
   protected TimeSlot() { }
 
