@@ -3,20 +3,13 @@ package com.greenfoxacademy.springherokutemplate.service;
 import java.util.List;
 
 import com.greenfoxacademy.springherokutemplate.model.Location;
-import com.greenfoxacademy.springherokutemplate.repository.LocationRepository;
+import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
 
-import org.springframework.stereotype.Service;
+public interface LocationService {
+  public List<Location> getAllLocations();
 
-@Service
-public class LocationService {
-  LocationRepository locationRepository;
+  public List<LocationDTO> getAllLocationDTOs();
 
-  public LocationService(LocationRepository locationRepository) {
-    this.locationRepository = locationRepository;
-  }
+  public LocationDTO locationToLocationDTOConverter(Location location);
 
-  public List<Location> getAllLocations() {
-    List<Location> locationList = locationRepository.findAll();
-    return locationList;
-  }
 }
