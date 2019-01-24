@@ -1,7 +1,5 @@
 package com.greenfoxacademy.springherokutemplate.email;
 
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
@@ -16,12 +14,12 @@ import java.util.Properties;
 @Component
 public class SendEmail {
 
-//  @Value("${EMAIL_NAME}")
-  private String USER_NAME = "ataribooking";  // GMail user name (just the part before "@gmail.com")
-//  @Value("${EMAIL_PASSWORD}")
-  private String PASSWORD = "AtariAtari1"; // GMail password
+  private String USER_NAME;  // GMail user name (just the part before "@gmail.com")
+  private String PASSWORD; // GMail password
 
   public SendEmail() {
+    this.USER_NAME = System.getenv().get("EMAIL_NAME");
+    this.PASSWORD = System.getenv().get("EMAIL_PASSWORD");
   }
 
 
