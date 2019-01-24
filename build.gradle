@@ -32,6 +32,8 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'
     testImplementation 'com.h2database:h2'
+    compile group: 'org.webjars', name: 'bootstrap', version: '4.2.1'
+    compile group: 'org.webjars.bower', name: 'jquery', version: '3.2.1'
     compile group: 'javax.mail', name: 'mail', version: '1.5.0-b01'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
