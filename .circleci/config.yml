@@ -51,7 +51,7 @@ jobs:
         key: v1-dependencies-{{ checksum "build.gradle" }}
 
     # run tests!
-    - run: gradle test
+    - run: ./gradlew build -x test
   deploy:
     docker:
     - image: circleci/openjdk:8-jdk
