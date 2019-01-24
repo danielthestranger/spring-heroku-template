@@ -1,5 +1,6 @@
 package com.greenfoxacademy.springherokutemplate.email;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +16,10 @@ import java.util.Properties;
 @Component
 public class SendEmail {
 
-  @Value("${EMAIL_NAME}")
-  private String USER_NAME;  // GMail user name (just the part before "@gmail.com")
-  @Value("${EMAIL_PASSWORD}")
-  private String PASSWORD; // GMail password
-  @Value("${HOST}")
-  private String HOSTNAME;
-  @Value("${PORT}")
-  private String PORT;
+//  @Value("${EMAIL_NAME}")
+  private String USER_NAME = "ataribooking";  // GMail user name (just the part before "@gmail.com")
+//  @Value("${EMAIL_PASSWORD}")
+  private String PASSWORD = "AtariAtari1"; // GMail password
 
   public SendEmail() {
   }
@@ -31,10 +28,10 @@ public class SendEmail {
   public void sendFromGMail(String to, String subject, String body) {
     Properties props = System.getProperties();
     props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.host", HOSTNAME);
+    props.put("mail.smtp.host", "smtp.gmail.com");
     props.put("mail.smtp.user", USER_NAME);
     props.put("mail.smtp.password", PASSWORD);
-    props.put("mail.smtp.port", PORT);
+    props.put("mail.smtp.port", "587");
     props.put("mail.smtp.auth", "true");
 
     Session session = Session.getDefaultInstance(props);
@@ -47,7 +44,7 @@ public class SendEmail {
       message.setSubject(subject);
       message.setText(body);
       Transport transport = session.getTransport("smtp");
-      transport.connect(HOSTNAME, USER_NAME, PASSWORD);
+      transport.connect("smtp.gmail.com", USER_NAME, PASSWORD);
       transport.sendMessage(message, message.getAllRecipients());
       transport.close();
     } catch (AddressException ae) {
