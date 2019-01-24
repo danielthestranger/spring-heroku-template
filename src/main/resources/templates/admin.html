@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin</title>
+</head>
+<body>
+<h7>EDIT ATTRIBUTES</h7>
+<br>
+<h5>Service types</h5>
+<a th:each="servicetype : ${ServiceTypes}" class="buttonP"
+   th:href="@{${'/admin/' + servicetype.id + '/editCohort'}}"
+   th:text="${servicetype.name}"></a>
+</body>
+</html>

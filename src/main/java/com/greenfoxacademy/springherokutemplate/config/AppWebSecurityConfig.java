@@ -17,45 +17,45 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+  @Autowired
+  private DataSource dataSource;
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder encoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "select username, password, enabled from app_user " +
-                                "where username=?")
-                .authoritiesByUsernameQuery(
-                        "select username, authority from app_user_authority " +
-                                "where username=?")
-                .passwordEncoder(encoder())
-        ;
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth
+        .jdbcAuthentication()
+        .dataSource(dataSource)
+        .usersByUsernameQuery(
+            "select username, password, enabled from app_user " +
+                "where username=?")
+        .authoritiesByUsernameQuery(
+            "select username, authority from app_user_authority " +
+                "where username=?")
+        .passwordEncoder(encoder())
+    ;
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/home/**")
-                    .hasAuthority("ROLE_USER")
-                .antMatchers("/", "/**", "/search", "/search/**")
-                    .permitAll()
-            .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home/")
-            .and()
-                .logout()
-        ;
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http
+        .authorizeRequests()
+        .antMatchers("/home/**")
+        .hasAuthority("ROLE_USER")
+        .antMatchers("/", "/**", "/search", "/search/**")
+        .permitAll()
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .defaultSuccessUrl("/home/")
+        .and()
+        .logout()
+    ;
+  }
 }
 
 
