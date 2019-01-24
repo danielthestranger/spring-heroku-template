@@ -9,21 +9,26 @@
 
         <!-- model: available locations, providers (of locations), service types (of locations), timeslots (of locations) -->
 
-        <form action="/search", method="POST">
-            <label for="Location">Location: </label>
+        <!-- <form action="/search", method="POST">
             <select>
                 <option th:each="location : ${locationList}"
-                        th:value="${location.geId()}" th:text="${location.getName()}">
+                        th:value="${location.getId()}" th:text="${location.getName()}">
                 </option>
             </select>
             <button>Search</button>
+        </form> -->
+
+        <form action="/search/", method="POST">
+            <select id="locationSelect">
+                <option value="">Select a location …</option>
+            </select>
+            <select id="serviceTypeSelect" style="display: none;">
+            </select>
         </form>
 
     </div>
 
-    <script th:inline="javascript">
-        
-    </script>
+    <script type="text/javascript" src="/js/search-script.js"></script>
     <script th:replace="th-fragments :: bootstrapscripts"></script>
 </body>
 </html>

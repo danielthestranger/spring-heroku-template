@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/search")
 public class SearchController {
-    // LocationRepository locationRepository;
+    LocationRepository locationRepository;
+
+    public SearchController(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
+    }
 
     @GetMapping("/")
-    public String searchPage(Model model) { 
+    public String searchPage(Model model) {
         // model: available locations, providers (of locations), service types (of locations), timeslots (of locations)
-        // model.addAttribute("locationList", locationRepository.findAll());
+        model.addAttribute("locationList", locationRepository.findAll());
         return "search";
     }
 
