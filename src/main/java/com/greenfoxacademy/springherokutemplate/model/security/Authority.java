@@ -1,5 +1,8 @@
 package com.greenfoxacademy.springherokutemplate.model.security;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +10,8 @@ import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
 public class Authority {
     @Id
     @Column(length = 100)
@@ -20,14 +25,6 @@ public class Authority {
 
     public Authority(String authority) {
         this();
-        this.authority = authority;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
         this.authority = authority;
     }
 }
