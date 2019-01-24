@@ -4,22 +4,26 @@
     <th:block th:include="th-fragments :: head" />
 </head>
 <body>
-<div class="container" role="main">
-    <nav th:replace="th-fragments :: nav"></nav>
+    <div class="container" role="main">
+        <nav th:replace="th-fragments :: nav"></nav>
 
-    <!-- model: available locations, providers (of locations), service types (of locations), timeslots (of locations) -->
+        <!-- model: available locations, providers (of locations), service types (of locations), timeslots (of locations) -->
 
-    <form action="/search", method="POST">
-        <label for="Location">Location: </label>
-        <select>
-            <option th:each="location : ${locationList}"
-                    th:value="${location.geId()}" th:text="${location.getName()}">
-            </option>
-        </select>
-        <button>Search</button>
-    </form>
+        <form action="/search", method="POST">
+            <label for="Location">Location: </label>
+            <select>
+                <option th:each="location : ${locationList}"
+                        th:value="${location.geId()}" th:text="${location.getName()}">
+                </option>
+            </select>
+            <button>Search</button>
+        </form>
 
-</div>
-<script th:replace="th-fragments :: bootstrapscripts"></script>
+    </div>
+
+    <script th:inline="javascript">
+        
+    </script>
+    <script th:replace="th-fragments :: bootstrapscripts"></script>
 </body>
 </html>
