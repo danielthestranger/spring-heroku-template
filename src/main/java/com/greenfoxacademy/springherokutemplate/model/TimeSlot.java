@@ -13,6 +13,9 @@ public class TimeSlot {
   @org.hibernate.annotations.Parent
   private AtariCalendar atariCalendar;
 
+  boolean isBooked;
+  String comments;
 
+  protected TimeSlot() { }
 
 }

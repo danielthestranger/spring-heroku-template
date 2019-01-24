@@ -22,14 +22,22 @@ public class AtariCalendar {
   @ManyToOne(cascade = {CascadeType.ALL})
   private AtariProvider atariProvider;
   private String comment;
-//  @ElementCollection
-//  @CollectionTable
-//  private Set<TimeSlot> timeSlotSet = new HashSet<>();
 
-//  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
-//    this.serviceType = serviceType;
-//    this.atariProvider = atariProvider;
-//    this.comment = comment;
-//    this.timeSlotSet = timeSlotSet;
-//  }
+  @ElementCollection
+  @CollectionTable(
+          name = "calendar_timeslot",
+          joinColumns = @JoinColumn(name = "ataricalendar_id")
+  )
+  private Set<TimeSlot> timeSlotSet = new HashSet<>();
+
+  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
+    this.serviceType = serviceType;
+    this.atariProvider = atariProvider;
+    this.comment = comment;
+    this.timeSlotSet = timeSlotSet;
+  }
+
+  public void setTimeSlotSet(Set<TimeSlot> timeSlotSet) {
+    this.timeSlotSet = timeSlotSet;
+  }
 }
