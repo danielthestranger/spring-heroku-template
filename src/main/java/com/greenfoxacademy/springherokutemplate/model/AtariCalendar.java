@@ -17,7 +17,9 @@ public class AtariCalendar {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @ManyToOne
   private ServiceType serviceType;
+  @ManyToOne
   private AtariProvider atariProvider;
   private String comment;
   @ElementCollection

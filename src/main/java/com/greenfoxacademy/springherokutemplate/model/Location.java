@@ -3,10 +3,7 @@ package com.greenfoxacademy.springherokutemplate.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +17,11 @@ public class Location {
   private Long id;
   private String name;
   private Address address;
+  @OneToMany
   private List<AtariCalendar> atariCalendarList;
 
   public Location() {
-    this.atariCalendarList = new ArrayList<AtariCalendar>();
+    this.atariCalendarList = new ArrayList<>();
   }
 
   public Location(String name, Address address, List<AtariCalendar> atariCalendarList) {
