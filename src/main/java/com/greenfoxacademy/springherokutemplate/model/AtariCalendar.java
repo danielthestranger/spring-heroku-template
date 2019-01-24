@@ -17,19 +17,19 @@ public class AtariCalendar {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.ALL})
   private ServiceType serviceType;
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.ALL})
   private AtariProvider atariProvider;
   private String comment;
-  @ElementCollection
-  @CollectionTable
-  private Set<TimeSlot> timeSlotSet = new HashSet<TimeSlot>();
+//  @ElementCollection
+//  @CollectionTable
+//  private Set<TimeSlot> timeSlotSet = new HashSet<>();
 
-  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
-    this.serviceType = serviceType;
-    this.atariProvider = atariProvider;
-    this.comment = comment;
-    this.timeSlotSet = timeSlotSet;
-  }
+//  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
+//    this.serviceType = serviceType;
+//    this.atariProvider = atariProvider;
+//    this.comment = comment;
+//    this.timeSlotSet = timeSlotSet;
+//  }
 }

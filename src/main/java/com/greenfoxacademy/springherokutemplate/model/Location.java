@@ -16,8 +16,9 @@ public class Location {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  @OneToOne(cascade = {CascadeType.ALL})
   private Address address;
-  @OneToMany
+  @OneToMany(cascade = {CascadeType.ALL})
   private List<AtariCalendar> atariCalendarList;
 
   public Location() {

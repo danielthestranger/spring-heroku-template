@@ -16,11 +16,9 @@ public class AtariProvider {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @ManyToMany
-  private ServiceType serviceType;
 
-  public AtariProvider(String name, ServiceType serviceType) {
+
+  public AtariProvider(String name) {
     this.name = name;
-    this.serviceType = serviceType;
   }
 }
