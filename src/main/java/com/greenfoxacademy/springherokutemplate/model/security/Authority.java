@@ -13,13 +13,16 @@ import java.util.Set;
 @Getter
 @Setter
 public class Authority {
+
     @Id
     @Column(length = 100)
     private String authority;
+
     @ManyToMany(mappedBy = "authorities")
     private Set<AppUser> users;
 
-    public Authority() {
+
+    private Authority() {
     }
 
     public Authority(String authority) {

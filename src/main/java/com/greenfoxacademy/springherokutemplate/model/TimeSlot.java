@@ -20,12 +20,23 @@ public class TimeSlot {
 
   private Timestamp beginTime;
   private Timestamp endTime;
-  private boolean isBooked;
+  private boolean booked;
   private String comments;
 
   @ManyToOne
-  private AppUser appUser;
+  private AppUser bookedBy;
 
-  protected TimeSlot() { }
 
+  protected TimeSlot() {
+  }
+
+  //For some reason, Lombok doesn't generate a getter and setter for atariCalendar
+  public AtariCalendar getAtariCalendar() {
+    return atariCalendar;
+  }
+
+  //For some reason, Lombok doesn't generate a getter and setter for atariCalendar
+  public void setAtariCalendar(AtariCalendar atariCalendar) {
+    this.atariCalendar = atariCalendar;
+  }
 }
