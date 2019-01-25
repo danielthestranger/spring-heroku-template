@@ -3,6 +3,7 @@ package com.greenfoxacademy.springherokutemplate.service;
 import java.util.List;
 
 import com.greenfoxacademy.springherokutemplate.model.AtariCalendar;
+import com.greenfoxacademy.springherokutemplate.model.AtariProvider;
 import com.greenfoxacademy.springherokutemplate.model.Location;
 import com.greenfoxacademy.springherokutemplate.model.ServiceType;
 import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
@@ -20,6 +21,8 @@ public interface LocationService {
 
   public List<ServiceType> getServiceTypesFromAtariCalendarIds(List<Long> atariCalendarIds);
 
-  ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId);
+  public ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId);
+
+  public AtariProvider getServiceProviderFromAtariCalendarAndServiceTypeId(Long calendarId, Long serviceTypeId);
 
 }

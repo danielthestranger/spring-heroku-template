@@ -8,4 +8,7 @@ import java.util.List;
 public interface AtariProviderRepository extends CrudRepository<AtariProvider, Long> {
 
   List<AtariProvider> findAll();
+
+  AtariProvider findAllById(Long id);
+  
 }
