@@ -48,7 +48,7 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/home/**", "/book/**", "/profile/**")
                     .hasAuthority(KnownAuthorities.ROLE_USER)
-                .antMatchers("/manage/**", "/book/**", "/profile/**")
+                .antMatchers("/manage/**")
                     .hasAuthority(KnownAuthorities.ROLE_MANAGER)
                 .antMatchers("/", "/search", "/search/**")
                     .permitAll()

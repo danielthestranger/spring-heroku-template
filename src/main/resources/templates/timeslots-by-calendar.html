@@ -11,6 +11,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <div th:if="${errors != null}" th:text="${errors}" class="alert alert-danger" role="alert"></div>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -23,15 +24,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="timeSlotDTO : ${timeSlotDTOs}" th:object="${timeSlotDTO}">
-                    <td th:text="${#temporals.format(*{beginTime}, 'dd-MM-yyyy HH:mm')}"></td>
-                    <td th:text="${#temporals.format(*{endTime}, 'dd-MM-yyyy HH:mm')}"></td>
-                    <td th:text="*{booked}"></td>
-                    <td th:text="*{comments}" align="right"></td>
-                    <td th:text="*{bookedByName}" align="right"></td>
+                <tr th:each="timeSlotDTO : ${timeSlotDTOs}">
+                    <td th:text="${#temporals.format(timeSlotDTO.beginTime, 'dd-MMM-yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(timeSlotDTO.endTime, 'dd-MMM-yyyy HH:mm')}"></td>
+                    <td th:text="${timeSlotDTO.booked}"></td>
+                    <td th:text="${timeSlotDTO.comments}"></td>
+                    <td th:text="${timeSlotDTO.bookedByName}"></td>
                     <td>
-                        <form method="post" action="#" th:action="@{/book}" class="form-inline">
-                            <input type="hidden" th:field="*{timeSlotId}"/>
+                        <form th:unless="${timeSlotDTO.booked}" th:object="${bookSlotDTO}" method="post" action="#" th:action="@{/book}" class="form-inline">
+                            <input type="hidden" name="timeSlotId" th:value="${timeSlotDTO.timeSlotId}"/>
                             <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">Book now</button>
                         </form>
                     </td>

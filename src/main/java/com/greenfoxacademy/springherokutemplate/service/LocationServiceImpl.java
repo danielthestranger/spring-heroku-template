@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.greenfoxacademy.springherokutemplate.model.AtariCalendar;
+import com.greenfoxacademy.springherokutemplate.model.AtariProvider;
 import com.greenfoxacademy.springherokutemplate.model.Location;
 import com.greenfoxacademy.springherokutemplate.model.ServiceType;
 import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
 import com.greenfoxacademy.springherokutemplate.repository.AtariCalendarRepository;
+import com.greenfoxacademy.springherokutemplate.repository.AtariProviderRepository;
 import com.greenfoxacademy.springherokutemplate.repository.LocationRepository;
 import com.greenfoxacademy.springherokutemplate.repository.ServiceTypeRepository;
 
@@ -18,19 +20,23 @@ public class LocationServiceImpl implements LocationService {
   LocationRepository locationRepository;
   AtariCalendarRepository atariCalendarRepository;
   ServiceTypeRepository serviceTypeRepository;
+  AtariProviderRepository atariProviderRepository;
 
   public LocationServiceImpl(LocationRepository locationRepository, 
-  AtariCalendarRepository atariCalendarRepository, ServiceTypeRepository serviceTypeRepository) {
+  AtariCalendarRepository atariCalendarRepository, ServiceTypeRepository serviceTypeRepository, AtariProviderRepository atariProviderRepository) {
     this.locationRepository = locationRepository;
     this.atariCalendarRepository = atariCalendarRepository;
     this.serviceTypeRepository = serviceTypeRepository;
+    this.atariProviderRepository = atariProviderRepository;
   }
 
+  @Override
   public List<Location> getAllLocations() {
     List<Location> locationList = locationRepository.findAll();
     return locationList;
   }
 
+  @Override
   public List<LocationDTO> getAllLocationDTOs() {
     List<Location> locationList = getAllLocations();
     List<LocationDTO> locationDTOList = new ArrayList<>();
@@ -42,6 +48,7 @@ public class LocationServiceImpl implements LocationService {
     return locationDTOList;
   }
 
+  @Override
   public LocationDTO locationToLocationDTOConverter(Location location) {
     LocationDTO locationDTO = new LocationDTO();
     List<Long> atariCalendarIds = new ArrayList<>();
@@ -59,6 +66,7 @@ public class LocationServiceImpl implements LocationService {
     return locationDTO;
   }
   
+  @Override
   public List<AtariCalendar> getAtariCalendarsFromIds(List<Long> atariCalendarIds) {
     List<AtariCalendar> atariCalendars = new ArrayList<>();
 
@@ -69,14 +77,22 @@ public class LocationServiceImpl implements LocationService {
     return atariCalendars;
   }
   
+  @Override
   public AtariCalendar getAtariCalendarFromId(Long atariCalendarId) {
     return atariCalendarRepository.findAllById(atariCalendarId);
   }
   
+  @Override
   public ServiceType getServiceTypeFromId(Long serviceTypeId) {
     return serviceTypeRepository.findAllById(serviceTypeId);
   }
   
+  @Override
+  public AtariProvider getAtariProviderFromId(Long atariProviderId) {
+    return atariProviderRepository.findAllById(atariProviderId);
+  }
+  
+  @Override
   public List<ServiceType> getServiceTypesFromAtariCalendarIds(List<Long> atariCalendarIds) {
     List<ServiceType> serviceTypeList = new ArrayList<>();
 
@@ -90,6 +106,7 @@ public class LocationServiceImpl implements LocationService {
     return serviceTypeList;
   }
 
+  @Override
   public ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId) {
       AtariCalendar atariCalendar = getAtariCalendarFromId(atariCalendarId);
       ServiceType serviceType = getServiceTypeFromId(atariCalendar.getServiceType().getId());
@@ -97,6 +114,19 @@ public class LocationServiceImpl implements LocationService {
     return serviceType;
   }
 
+  @Override
+  public AtariProvider getServiceProviderFromAtariCalendarAndServiceTypeId(Long atariCalendarId, Long serviceTypeId) {
+    AtariCalendar atariCalendar = getAtariCalendarFromId(atariCalendarId);
+    ServiceType serviceType = getServiceTypeFromId(serviceTypeId);
+    AtariProvider atariProvider = getAtariProviderFromId(atariCalendar.getAtariProvider().getId());
+
+    if (atariCalendar.getServiceType().getId() == serviceType.getId()) {
+	    return atariProvider;
+    }
+    return null;
+  }
+
+  @Override
   public void saveLocation(Location location) {
     locationRepository.save(location);
   }

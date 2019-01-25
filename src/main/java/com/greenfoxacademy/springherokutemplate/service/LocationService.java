@@ -3,24 +3,31 @@ package com.greenfoxacademy.springherokutemplate.service;
 import java.util.List;
 
 import com.greenfoxacademy.springherokutemplate.model.AtariCalendar;
+import com.greenfoxacademy.springherokutemplate.model.AtariProvider;
 import com.greenfoxacademy.springherokutemplate.model.Location;
 import com.greenfoxacademy.springherokutemplate.model.ServiceType;
 import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
 
 public interface LocationService {
-  public List<Location> getAllLocations();
+  List<Location> getAllLocations();
 
-  public List<LocationDTO> getAllLocationDTOs();
+  List<LocationDTO> getAllLocationDTOs();
 
-  public LocationDTO locationToLocationDTOConverter(Location location);
+  LocationDTO locationToLocationDTOConverter(Location location);
 
-  public List<AtariCalendar> getAtariCalendarsFromIds(List<Long> atariCalendarIds);
+  List<AtariCalendar> getAtariCalendarsFromIds(List<Long> atariCalendarIds);
 
-  public AtariCalendar getAtariCalendarFromId(Long atariCalendarId);
+  AtariCalendar getAtariCalendarFromId(Long atariCalendarId);
 
-  public List<ServiceType> getServiceTypesFromAtariCalendarIds(List<Long> atariCalendarIds);
+  List<ServiceType> getServiceTypesFromAtariCalendarIds(List<Long> atariCalendarIds);
 
   ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId);
+
+  AtariProvider getServiceProviderFromAtariCalendarAndServiceTypeId(Long calendarId, Long serviceTypeId);
+
+  ServiceType getServiceTypeFromId(Long serviceTypeId);
+
+  AtariProvider getAtariProviderFromId(Long atariProviderId);
 
   Location findCreateOrUpdate(String newName, Long id);
 
