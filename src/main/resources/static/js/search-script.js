@@ -84,3 +84,6 @@ function changeLocationSelectEventHandler() {
   })
 }
 
+function changeServiceTypeSelectEventHandler() {
+  
+}
