@@ -55,7 +55,7 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
             .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/basicsearch/calendars")
             .and()
                 .logout()
         ;

@@ -36,14 +36,17 @@ public class BookingServiceImpl implements BookingService {
     TimeSlot timeSlot = timeSlotRepository.findById(timeSlotId).get();
     timeSlot.setBooked(true);
     timeSlot.setBookedBy(user);
+
+    TimeSlot bookedSlot = timeSlotRepository.save(timeSlot);
+
     try {
       sendEmail.sendFromGMail(user.getEmail(), "Booked appointment", "Dear " + user.getUsername() +
-          ", \n You have booked an appointment at location: " + timeSlot.getAtariCalendar().getLocation().getName() + " at " + timeSlot.getBeginTime() + ". " +
+          ", \n You have booked an appointment at location: " + bookedSlot.getAtariCalendar().getLocation().getName() + " at " + bookedSlot.getBeginTime() + ". " +
           "\n Best regards,\n Admin");
     } catch (MessagingException e) {
       e.printStackTrace();
     }
-    return timeSlotRepository.save(timeSlot);
+    return bookedSlot;
   }
 
   @Override
