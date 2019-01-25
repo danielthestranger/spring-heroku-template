@@ -3,18 +3,27 @@ package com.greenfoxacademy.springherokutemplate.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.greenfoxacademy.springherokutemplate.model.AtariCalendar;
 import com.greenfoxacademy.springherokutemplate.model.Location;
+import com.greenfoxacademy.springherokutemplate.model.ServiceType;
 import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
+import com.greenfoxacademy.springherokutemplate.repository.AtariCalendarRepository;
 import com.greenfoxacademy.springherokutemplate.repository.LocationRepository;
+import com.greenfoxacademy.springherokutemplate.repository.ServiceTypeRepository;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class LocationServiceImpl implements LocationService {
   LocationRepository locationRepository;
+  AtariCalendarRepository atariCalendarRepository;
+  ServiceTypeRepository serviceTypeRepository;
 
-  public LocationServiceImpl(LocationRepository locationRepository) {
+  public LocationServiceImpl(LocationRepository locationRepository, 
+  AtariCalendarRepository atariCalendarRepository, ServiceTypeRepository serviceTypeRepository) {
     this.locationRepository = locationRepository;
+    this.atariCalendarRepository = atariCalendarRepository;
+    this.serviceTypeRepository = serviceTypeRepository;
   }
 
   public List<Location> getAllLocations() {
@@ -48,5 +57,43 @@ public class LocationServiceImpl implements LocationService {
     locationDTO.setAtariCalendarIds(atariCalendarIds);
 
     return locationDTO;
+  }
+  
+  public List<AtariCalendar> getAtariCalendarsFromIds(List<Long> atariCalendarIds) {
+    List<AtariCalendar> atariCalendars = new ArrayList<>();
+
+    for (int i = 0; i < atariCalendarIds.size(); i++) {
+      atariCalendars.add(atariCalendarRepository.findAllById(atariCalendarIds.get(i)));
+    }
+
+    return atariCalendars;
+  }
+  
+  public AtariCalendar getAtariCalendarFromId(Long atariCalendarId) {
+    return atariCalendarRepository.findAllById(atariCalendarId);
+  }
+  
+  public ServiceType getServiceTypeFromId(Long serviceTypeId) {
+    return serviceTypeRepository.findAllById(serviceTypeId);
+  }
+  
+  public List<ServiceType> getServiceTypesFromAtariCalendarIds(List<Long> atariCalendarIds) {
+    List<ServiceType> serviceTypeList = new ArrayList<>();
+
+    for (int i = 0; i < atariCalendarIds.size(); i++) {
+      AtariCalendar atariCalendar = getAtariCalendarFromId(atariCalendarIds.get(i));
+      ServiceType serviceType = getServiceTypeFromId(atariCalendar.getServiceType().getId());
+
+      serviceTypeList.add(serviceType);
+    }
+
+    return serviceTypeList;
+  }
+
+  public ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId) {
+      AtariCalendar atariCalendar = getAtariCalendarFromId(atariCalendarId);
+      ServiceType serviceType = getServiceTypeFromId(atariCalendar.getServiceType().getId());
+
+    return serviceType;
   }
 }
