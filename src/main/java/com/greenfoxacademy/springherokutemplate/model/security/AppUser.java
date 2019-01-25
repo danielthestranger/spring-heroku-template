@@ -13,7 +13,7 @@ import java.util.Set;
 public class AppUser {
 
   @Id
-  @GeneratedValue(generator = "ID_GENERATOR")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(length = 100, unique = true)
@@ -22,7 +22,6 @@ public class AppUser {
   private String password;
   private String fullName;
   private Boolean enabled;
-  private Boolean isAdmin;
 
   @Column(unique = true)
   private String email;
@@ -41,11 +40,12 @@ public class AppUser {
   private AppUser() {
   }
 
-  public AppUser(String username, String password, Boolean enabled) {
+  public AppUser(String username, String password, Boolean enabled, String email) {
     this();
     this.username = username;
     this.password = password;
     this.enabled = enabled;
+    this.email = email;
   }
 
   public void addAuthority(Authority authority) {

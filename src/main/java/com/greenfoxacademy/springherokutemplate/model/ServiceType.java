@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class ServiceType {
 
   @Id
-  @GeneratedValue(generator = "ID_GENERATOR")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;

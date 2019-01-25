@@ -1,5 +1,5 @@
 @org.hibernate.annotations.GenericGenerator(
-    name = "ID_GENERATOR",
+    name = "TIMESLOT_ID_GENERATOR",
     strategy = "native"
 )
 package com.greenfoxacademy.springherokutemplate;

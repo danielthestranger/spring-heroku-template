@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <th:block th:include="th-fragments :: head" />
+  <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container" role="main">
+  <nav th:replace="th-fragments :: nav"></nav>
+
+<h3>EDIT ATTRIBUTES</h3>
+<br>
+<h6>Service types</h6>
+  <div class="container">
+<a th:each="servicetype : ${ServiceTypes}" class="btn btn-success" style="border-radius: 1rem; margin-right: 10px"
+   th:href="@{${'/admin/' + servicetype.id + '/editServiceType'}}"
+   th:text="${servicetype.name}"></a>
+<h6>Edit or add new Service type:</h6>
+<form class="form-group form-control-lg" id="servicetype" action="#" th:action="@{/admin/addServiceType}" th:object="${newServicetype}" method="post">
+  <input type="hidden" name="servicetypeid" th:value="${newServicetype.id}"/>
+  <input type="text" name="newServiceType" th:value="${newServicetype.name}"/>
+  <input type="submit" class="btn btn-primary" style="margin-left: 5px" value="Submit"/>
+  <a th:if="${newServicetype.name} != null" class="btn btn-danger"
+     th:href="'/admin/' + ${newServicetype.id} + '/deleteServiceType'">Delete</a>
+  <a th:if="${newServicetype.name} != null" class="btn btn-info" href="/admin/">Cancel</a>
+</form>
+  </div>
+</div>
+<script th:replace="th-fragments :: bootstrapscripts"></script>
+<script src="webjars/jquery/1.11.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+</body>
+</html>
