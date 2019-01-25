@@ -14,4 +14,6 @@ public interface ServiceTypeService {
   ServiceType findById(Long id);
 
   ServiceType findCreateOrUpdate(String newName, Long id);
+
+  ServiceType findByName(String name);
 }

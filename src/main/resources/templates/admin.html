@@ -66,6 +66,49 @@
     </form>
   </div>
 <br>
+  <h6>Calendars</h6>
+  <div class="container">
+    <a th:each="calendar : ${calendars}" class="btn btn-success" style="border-radius: 1rem; margin-right: 10px"
+       th:href="@{${'/admin/' + calendar.id + '/editAtariCalendar'}}"
+       th:text="${calendar.name}"></a>
+    <br>
+    <br>
+    <h6>Edit or add new Calendar:</h6>
+    <form class="form-group form-control-lg" id="ataricalendar" action="#" th:action="@{/admin/addAtariCalendar}" th:object="${newAtariCalendar}" method="post">
+      <input type="hidden" name="calendarid" th:value="${newAtariCalendar.id}"/>
+      <input type="text" name="newAtariCalendar" th:value="${newAtariCalendar.name}"/>
+      <br>
+      <select id="newServicetypeName" name="newServicetypeName" class="selectpicker" data-show-subtext="true"
+              data-live-search="true">
+        <option selected>choose Service type</option>
+        <div th:each="service:${ServiceTypes}">
+          <option th:value="${service.name}" th:text="${service.name}"
+                  th:sub-text="${service.name}"/>
+        </div>
+      </select>
+      <select id="newAtariProviderName" name="newAtariProviderName" class="selectpicker" data-show-subtext="true"
+              data-live-search="true">
+        <option  selected>choose provider</option>
+        <div th:each="provider:${atariproviders}">
+          <option th:value="${provider.description}" th:text="${provider.description}"
+                  th:sub-text="${provider.description}"/>
+        </div>
+      </select>
+      <select id="newLocationName" name="newLocationName" class="selectpicker" data-show-subtext="true"
+              data-live-search="true">
+        <option  selected>choose location</option>
+        <div th:each="location:${locations}">
+          <option th:value="${location.name}" th:text="${location.name}"
+                  th:sub-text="${location.name}"/>
+        </div>
+
+      </select>
+      <input type="submit" class="btn btn-primary" style="margin-left: 5px" value="Submit"/>
+      <a th:if="${newAtariCalendar.name} != null" class="btn btn-danger"
+      th:href="'/admin/' + ${newAtariCalendar.id} + '/deleteAtariCalendar'">Delete</a>
+      <a th:if="${newAtariCalendar.name} != null" class="btn btn-info" href="/admin/">Cancel</a>
+    </form>
+  </div>
 
 </div>
 <script th:replace="th-fragments :: bootstrapscripts"></script>

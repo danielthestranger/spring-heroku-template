@@ -16,4 +16,6 @@ public interface AtariProviderService {
 
   AtariProvider findCreateOrUpdate(String newName, Long id);
 
+  AtariProvider findByDescription(String description);
+
 }

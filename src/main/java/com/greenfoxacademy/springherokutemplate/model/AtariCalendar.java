@@ -19,6 +19,8 @@ public class AtariCalendar {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private String name;
+
   @ManyToOne
   private ServiceType serviceType;
 
@@ -34,11 +36,13 @@ public class AtariCalendar {
   private Collection<TimeSlot> timeSlots = new ArrayList<>();
 
 
-  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Collection<TimeSlot> timeSlots) {
+  public AtariCalendar(String name, ServiceType serviceType, AtariProvider atariProvider, String comment, Collection<TimeSlot> timeSlots, Location location) {
     this.serviceType = serviceType;
     this.atariProvider = atariProvider;
     this.comment = comment;
     this.timeSlots = timeSlots;
+    this.name = name;
+    this.location = location;
   }
 
   public void setTimeSlotSet(Collection<TimeSlot> timeSlots) {
