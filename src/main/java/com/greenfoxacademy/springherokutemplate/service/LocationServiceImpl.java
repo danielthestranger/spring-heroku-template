@@ -96,4 +96,38 @@ public class LocationServiceImpl implements LocationService {
 
     return serviceType;
   }
+
+  public void saveLocation(Location location) {
+    locationRepository.save(location);
+  }
+
+  @Override
+  public void deleteLocation(Long id) {
+    locationRepository.delete(locationRepository.findById(id).orElse(null));
+  }
+
+  @Override
+  public Location findById(Long id) {
+    return locationRepository.findById(id).orElse(null);
+  }
+
+  @Override
+  public Location findCreateOrUpdate(String newName, Long id) {
+    if (newName == null || newName.isEmpty()) {
+      throw new NullPointerException("Attribute name is null or empty");
+    }
+    if (id == null) {
+      Location savedLocation = locationRepository.findByName(newName);
+      if (savedLocation == null) {
+        Location location = new Location(newName);
+        savedLocation = locationRepository.save(location);
+        return savedLocation;
+      } else if (savedLocation.getName().equals(newName)) {
+        return savedLocation;
+      }
+    }
+    Location updateLocation = locationRepository.findById(id).orElse(null);
+    updateLocation.setName(newName);
+    return locationRepository.save(updateLocation);
+  }
 }

@@ -22,4 +22,12 @@ public interface LocationService {
 
   ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId);
 
+  Location findCreateOrUpdate(String newName, Long id);
+
+  Location findById(Long id);
+
+  void deleteLocation(Long id);
+
+  void saveLocation(Location location);
+
 }
