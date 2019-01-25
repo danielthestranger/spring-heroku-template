@@ -1,11 +1,12 @@
 const locationlisturl = "http://localhost:8080/search/api/locationlist";
-const 
+const servicetypelisturl = "http://localhost:8080/search/api/servicetypesoflocation";
 
 const myLocationSelect = document.getElementById("locationSelect");
 const myServiceTypeSelect = document.getElementById("serviceTypeSelect");
 const mySelectedInformation = document.getElementById("selectedInformation");
 
 const locationList = [];
+let selectedLocationServiceTypes = [];
 
 const fillLocationSelect = (data) => {
   Object.keys(data).forEach((key) => {
@@ -20,10 +21,11 @@ const fillLocationSelect = (data) => {
     myLocationSelect.appendChild(newOption);
   })
 }
-
-fetch(locationlisturl)
-  .then((resp) => (resp.json()))
-  .then(fillLocationSelect);
+window.onload = () => {
+  fetch(locationlisturl)
+    .then((resp) => (resp.json()))
+    .then(fillLocationSelect);
+}
 
 function locationInformationFiller(address) {
   while (mySelectedInformation.firstChild) {
@@ -47,9 +49,38 @@ myLocationSelect.onchange = changeLocationSelectEventHandler;
 
 function changeLocationSelectEventHandler() {
   myServiceTypeSelect.style.display = "block";
+  mySelectedLocation = myLocationSelect.options[this.selectedIndex];
+  let mySelectedLocationCalendarIDs = [];
 
-  locationList.forEach(location => myLocationSelect.options[this.selectedIndex].innerText == location.name ? locationInformationFiller(location.address) : 0);
+  while (myServiceTypeSelect.firstChild) {
+    myServiceTypeSelect.removeChild(myServiceTypeSelect.firstChild);
+  }
+  let newOption = document.createElement('option');
+  newOption.innerText = 'Select a service …';
+  myServiceTypeSelect.appendChild(newOption);
 
-  
+  locationList.forEach(location => {
+    if (mySelectedLocation.innerText == location.name) {
+      locationInformationFiller(location.address);
+      mySelectedLocationCalendarIDs = location.atariCalendarIds;
+    }
+  });
+
+  const fillServiceTypeSelect = (data) => {
+    let newOption = document.createElement('option');
+
+    newOption.text = data.name;
+    newOption.setAttribute('value', data.id);
+
+    myServiceTypeSelect.appendChild(newOption);
+
+    selectedLocationServiceTypes.push(data);
+  }
+
+  mySelectedLocationCalendarIDs.forEach(calendarId => {
+    fetch(`${servicetypelisturl}?calendarid=${calendarId}`)
+      .then((resp) => (resp.json()))
+      .then(fillServiceTypeSelect);
+  })
 }
 
