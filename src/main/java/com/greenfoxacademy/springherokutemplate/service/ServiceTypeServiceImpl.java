@@ -55,4 +55,8 @@ public class ServiceTypeServiceImpl implements ServiceTypeService {
     updateAttribute.setName(newName);
     return serviceTypeRepository.save(updateAttribute);
   }
+
+  public ServiceType findByName(String name) {
+    return serviceTypeRepository.findByName(name);
+  }
 }

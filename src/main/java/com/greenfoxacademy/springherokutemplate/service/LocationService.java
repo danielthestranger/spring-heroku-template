@@ -30,4 +30,6 @@ public interface LocationService {
 
   void saveLocation(Location location);
 
+  Location findByName(String name);
+
 }

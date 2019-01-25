@@ -1,8 +1,10 @@
 package com.greenfoxacademy.springherokutemplate.controller;
 
+import com.greenfoxacademy.springherokutemplate.model.AtariCalendar;
 import com.greenfoxacademy.springherokutemplate.model.AtariProvider;
 import com.greenfoxacademy.springherokutemplate.model.Location;
 import com.greenfoxacademy.springherokutemplate.model.ServiceType;
+import com.greenfoxacademy.springherokutemplate.service.AtariCalendarService;
 import com.greenfoxacademy.springherokutemplate.service.AtariProviderService;
 import com.greenfoxacademy.springherokutemplate.service.LocationService;
 import com.greenfoxacademy.springherokutemplate.service.ServiceTypeService;
@@ -18,13 +20,15 @@ public class AdminController {
   private ServiceTypeService serviceTypeService;
   private LocationService locationService;
   private AtariProviderService atariProviderService;
+  private AtariCalendarService atariCalendarService;
 
   @Autowired
   public AdminController(ServiceTypeService serviceTypeService, LocationService locationService,
-                      AtariProviderService atariProviderService) {
+                      AtariProviderService atariProviderService, AtariCalendarService atariCalendarService) {
     this.serviceTypeService = serviceTypeService;
     this.locationService = locationService;
     this.atariProviderService = atariProviderService;
+    this.atariCalendarService = atariCalendarService;
   }
 
   @ModelAttribute
@@ -35,6 +39,8 @@ public class AdminController {
     model.addAttribute("locations", locationService.getAllLocations());
     model.addAttribute("atariproviders", atariProviderService.findAll());
     model.addAttribute("newAtariProvider", new AtariProvider());
+    model.addAttribute("calendars", atariCalendarService.findAll());
+    model.addAttribute("newAtariCalendar", new AtariCalendar());
   }
 
 
@@ -109,6 +115,33 @@ public class AdminController {
                             @RequestParam(value = "newAtariProvider", required = false) String newName) {
     try {
       atariProviderService.findCreateOrUpdate(newName, id);
+    } catch (NullPointerException exception) {
+      System.out.println("not found" + exception);
+    }
+    return "redirect:/admin/";
+  }
+
+  @GetMapping("admin/{id}/deleteAtariCalendar")
+  public String deleteAtariCalendar(@PathVariable(value = "id") Long id) {
+    atariCalendarService.deleteAtariCalendar(id);
+    return "redirect:/admin";
+  }
+
+  @GetMapping("admin/{id}/editAtariCalendar")
+  public String editAtariCalendar(@PathVariable(value = "id") Long id, Model model) {
+    AtariCalendar atariCalendar = atariCalendarService.findById(id).orElse(null);
+    model.addAttribute("newAtariCalendar", atariCalendar);
+    return "admin";
+  }
+
+  @PostMapping("admin/addAtariCalendar")
+  public String addAtariCalendar(@RequestParam(value = "calendarid", required = false) Long id,
+                                 @RequestParam(value = "newAtariCalendar", required = false) String newName,
+                                 @RequestParam(value = "newServicetypeName", required = false) String newServiceTypeName,
+                                 @RequestParam(value = "newAtariProviderName", required = false) String newAtariProviderName,
+                                 @RequestParam(value = "newLocationName", required = false) String newLocationName) {
+    try {
+      atariCalendarService.findCreateOrUpdate(newName, newServiceTypeName, newAtariProviderName, newLocationName, id);
     } catch (NullPointerException exception) {
       System.out.println("not found" + exception);
     }

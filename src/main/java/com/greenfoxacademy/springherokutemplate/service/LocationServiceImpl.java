@@ -102,6 +102,11 @@ public class LocationServiceImpl implements LocationService {
   }
 
   @Override
+  public Location findByName(String name) {
+    return locationRepository.findByName(name);
+  }
+
+  @Override
   public void deleteLocation(Long id) {
     locationRepository.delete(locationRepository.findById(id).orElse(null));
   }

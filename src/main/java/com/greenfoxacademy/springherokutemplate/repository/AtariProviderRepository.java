@@ -9,4 +9,5 @@ public interface AtariProviderRepository extends CrudRepository<AtariProvider, L
 
   List<AtariProvider> findAll();
   AtariProvider findByDescription(String description);
+
 }

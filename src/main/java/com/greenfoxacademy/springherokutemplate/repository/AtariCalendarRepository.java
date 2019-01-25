@@ -10,4 +10,5 @@ public interface AtariCalendarRepository extends CrudRepository<AtariCalendar, L
   List<AtariCalendar> findAll();
 
   AtariCalendar findAllById(Long id);
+  AtariCalendar findByName(String name);
 }

@@ -57,4 +57,9 @@ public class AtariProviderServiceImpl implements AtariProviderService {
     updateAttribute.setDescription(newName);
     return atariProviderRepository.save(updateAttribute);
   }
+
+  @Override
+  public AtariProvider findByDescription(String name) {
+    return atariProviderRepository.findByDescription(name);
+  }
 }
