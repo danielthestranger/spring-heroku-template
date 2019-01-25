@@ -31,9 +31,9 @@ public class SearchRestController {
     return locationService.getServiceTypesFromAtariCalendarId(calendarId);
   }
   
-  @GetMapping("/serviceproviderssoflocation")
-  public AtariProvider getSelectedLocationServiceProvider(@RequestParam(value = "calendarid", required = true) Long calendarIdforProvider,
-  @RequestParam(value = "servicetypeid", required = true) Long servicetypeId) {
+  @GetMapping("/serviceprovidersoflocation")
+  public AtariProvider getSelectedLocationServiceProvider(@RequestParam(value = "calendarid") Long calendarIdforProvider,
+  @RequestParam(value = "servicetypeid") Long servicetypeId) {
     return locationService.getServiceProviderFromAtariCalendarAndServiceTypeId(calendarIdforProvider, servicetypeId);
   }
 }
