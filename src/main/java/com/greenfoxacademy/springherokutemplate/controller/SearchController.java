@@ -17,14 +17,14 @@ public class SearchController {
         this.locationRepository = locationRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String searchPage(Model model) {
         // model: available locations, providers (of locations), service types (of locations), timeslots (of locations)
         model.addAttribute("locationList", locationRepository.findAll());
         return "search";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String searchedValues() {
         // @RequestParam (locationId, providerId, service typeId, timeslot)
         // service search

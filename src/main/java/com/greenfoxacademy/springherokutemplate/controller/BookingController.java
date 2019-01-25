@@ -48,9 +48,7 @@ public class BookingController {
       return "timeslots-by-calendar";
     }
     bookingService.bookSlot(principal, booking);
-    ra.addAttribute("successMsg", "Appointment booked");
-    //TODO add the following to the redirected page:
-    //<div th:if="${successMsg != null}" th:text="${successMsg}" class="alert alert-success" role="alert"></div>
+    ra.addFlashAttribute("successMsg", "Appointment booked");
     return "redirect:/search";
   }
 }
