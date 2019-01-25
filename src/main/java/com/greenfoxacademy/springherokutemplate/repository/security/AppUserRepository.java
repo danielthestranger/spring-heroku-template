@@ -4,7 +4,12 @@ import com.greenfoxacademy.springherokutemplate.model.security.AppUser;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface AppUserRepository extends CrudRepository<AppUser, String> {
+public interface AppUserRepository extends CrudRepository<AppUser, Long> {
+
+  List<AppUser> findAll();
+
 
 }
