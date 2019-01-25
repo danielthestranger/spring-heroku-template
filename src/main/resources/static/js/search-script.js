@@ -12,9 +12,11 @@ const mySelectedInformation = document.getElementById("selectedInformation");
 
 // Arrays for fetched data
 const locationList = [];
+const selectedIds = [];
 let mySelectedLocationCalendarIDs = [];
 let mySelectedServiceType = null;
 let mySelectedLocation = null;
+let mySelectedServiceProvider = null;
 
 // Select fillers
 const fillLocationSelect = (data) => {
@@ -59,7 +61,8 @@ function changeLocationSelectEventHandler() {
   myServiceProviderSelect.style.display = 'none';
 
   mySelectedLocation = myLocationSelect.options[this.selectedIndex];
-  
+  selectedIdsFiller(0, mySelectedLocation);
+
   addDefaultSelectOption(myServiceTypeSelect, 'service');
 
   locationList.forEach(location => {
@@ -78,6 +81,7 @@ function changeServiceTypeSelectEventHandler() {
   myServiceProviderSelect.style.display = 'block';
   
   mySelectedServiceType = myServiceTypeSelect.options[this.selectedIndex];
+  selectedIdsFiller(1, mySelectedServiceType);
 
   addDefaultSelectOption(myServiceProviderSelect, 'provider');
 
@@ -88,6 +92,11 @@ function changeServiceTypeSelectEventHandler() {
 myServiceProviderSelect.onchange = changeSubmitButtonSelectEventHandler;
 function changeSubmitButtonSelectEventHandler() {
   mySubmitBtn.style.display = 'block';
+
+  mySelectedServiceProvider = myServiceProviderSelect.options[this.selectedIndex];
+  selectedIdsFiller(2, mySelectedServiceProvider);
+
+  //JSON post fetching with DTO(locId, servTypeId, servProvId) => selectedIds[]
 }
 
 // Fetchers
@@ -132,4 +141,13 @@ function locationInformationFiller(address) {
   newDivLocationAddress.appendChild(newH4AddressInfo);
 
   mySelectedInformation.appendChild(newDivLocationAddress);
+}
+
+function selectedIdsFiller(number, selecteditem) {
+    if (selectedIds.length == number) {
+        selectedIds.push(selecteditem.value)
+    } else {
+        selectedIds.splice(0, selectedIds.length + number)
+        selectedIds.push(selecteditem.value)
+    }
 }

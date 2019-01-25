@@ -7,10 +7,8 @@ import com.greenfoxacademy.springherokutemplate.model.ServiceType;
 import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
 import com.greenfoxacademy.springherokutemplate.service.LocationService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.sun.deploy.net.HttpResponse;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/search/api")
@@ -36,4 +34,8 @@ public class SearchRestController {
   @RequestParam(value = "servicetypeid") Long servicetypeId) {
     return locationService.getServiceProviderFromAtariCalendarAndServiceTypeId(calendarIdforProvider, servicetypeId);
   }
+
+//  @PostMapping("/selectedideas")
+//  public HttpResponse searchedValues(@RequestBody()) {
+//  }
 }

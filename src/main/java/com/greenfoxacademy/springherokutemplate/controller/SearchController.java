@@ -24,9 +24,7 @@ public class SearchController {
     }
 
     @PostMapping("/submit")
-    public String searchedValues(@RequestParam(value = "locationId") Long locationId,
-    @RequestParam(value = "serviceTypeId") Long serviceTypeId,
-    @RequestParam(value = "serviceProviderId") Long serviceProviderId) {
+    public String searchedValues() {
         return "redirect:/search/";
     }
 }
