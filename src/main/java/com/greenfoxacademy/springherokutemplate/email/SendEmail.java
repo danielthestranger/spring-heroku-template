@@ -23,7 +23,7 @@ public class SendEmail {
   }
 
 
-  public void sendFromGMail(String to, String subject, String body) {
+  public void sendFromGMail(String to, String subject, String body) throws MessagingException {
     Properties props = System.getProperties();
     props.put("mail.smtp.starttls.enable", "true");
     props.put("mail.smtp.host", "smtp.gmail.com");
@@ -35,7 +35,7 @@ public class SendEmail {
     Session session = Session.getDefaultInstance(props);
     MimeMessage message = new MimeMessage(session);
 
-    try {
+
       message.setFrom(new InternetAddress(USER_NAME));
       InternetAddress toAddress = new InternetAddress(to);
       message.addRecipient(Message.RecipientType.TO, toAddress);
@@ -45,10 +45,5 @@ public class SendEmail {
       transport.connect("smtp.gmail.com", USER_NAME, PASSWORD);
       transport.sendMessage(message, message.getAllRecipients());
       transport.close();
-    } catch (AddressException ae) {
-      ae.printStackTrace();
-    } catch (MessagingException me) {
-      me.printStackTrace();
-    }
   }
 }
