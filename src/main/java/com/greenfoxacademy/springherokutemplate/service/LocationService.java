@@ -25,9 +25,9 @@ public interface LocationService {
 
   AtariProvider getServiceProviderFromAtariCalendarAndServiceTypeId(Long calendarId, Long serviceTypeId);
 
-  ServiceType getServiceTypeFromId(Long serviceTypeId)
+  ServiceType getServiceTypeFromId(Long serviceTypeId);
 
-  AtariProvider getAtariProviderFromId(Long atariProviderId)
+  AtariProvider getAtariProviderFromId(Long atariProviderId);
 
   Location findCreateOrUpdate(String newName, Long id);
 

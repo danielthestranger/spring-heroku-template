@@ -7,6 +7,8 @@
     <div class="container" role="main">
         <nav th:replace="th-fragments :: nav"></nav>
 
+        <div th:if="${successMsg != null}" th:text="${successMsg}" class="alert alert-success" role="alert"></div>
+
         <form action="/search/submit", method="POST">
             <select name="locationId" id="locationSelect">
                 <option value="">Select a location …</option>
