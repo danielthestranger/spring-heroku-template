@@ -13,12 +13,9 @@ import java.util.Optional;
 public class BookSlotDTOValidator implements Validator {
 
   private BookingService bookingService;
-  private AtariCalendarService calendarService;
 
-  @Autowired
-  public BookSlotDTOValidator(BookingService bookingService, AtariCalendarService calendarService) {
+  public BookSlotDTOValidator(BookingService bookingService) {
     this.bookingService = bookingService;
-    this.calendarService = calendarService;
   }
 
   @Override
