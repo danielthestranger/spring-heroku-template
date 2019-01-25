@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class AtariProvider {
 
   @Id
-  @GeneratedValue(generator = "ID_GENERATOR")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String description;

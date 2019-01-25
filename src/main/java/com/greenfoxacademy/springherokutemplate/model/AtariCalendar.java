@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 @Getter
@@ -15,7 +16,7 @@ import java.util.Set;
 public class AtariCalendar {
 
   @Id
-  @GeneratedValue(generator = "ID_GENERATOR")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
@@ -30,11 +31,12 @@ public class AtariCalendar {
   private String comment;
 
   @ElementCollection
-  @CollectionTable(
-          name = "calendar_timeslot",
-          joinColumns = @JoinColumn(name = "ataricalendar_id")
-  )
-  private Set<TimeSlot> timeSlotSet = new HashSet<>();
+  @CollectionTable(name = "calendar_timeslot")
+  @org.hibernate.annotations.CollectionId(
+      columns = @Column(name = "slot_id"),
+      type = @org.hibernate.annotations.Type(type = "long"),
+      generator = "TIMESLOT_ID_GENERATOR")
+  private Collection<TimeSlot> timeSlotSet = new ArrayList<>();
 
 
   public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
