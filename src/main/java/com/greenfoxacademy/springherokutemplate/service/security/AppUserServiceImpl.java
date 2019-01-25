@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -29,11 +30,6 @@ public class AppUserServiceImpl implements AppUserService {
   }
 
   @Override
-  public AppUser save(AppUser user) {
-      return userRepository.save(user);
-  }
-
-  @Override
   public AppUser createDefaultUser(RegistrationForm regForm) {
     String encodedPassword = passwordEncoder.encode(regForm.getPassword());
     AppUser newUser = new AppUser(
@@ -46,6 +42,16 @@ public class AppUserServiceImpl implements AppUserService {
     newUser.addAuthority(getDefaultAuthority());
 
     return userRepository.save(newUser);
+  }
+
+  @Override
+  public AppUser fromPrincipal(Principal principal) {
+    String username = principal.getName();
+    Optional<AppUser> user = userRepository.findByUserName(username);
+
+    //TODO handle user not found
+
+    return user.get();
   }
 
   private Authority getDefaultAuthority() {

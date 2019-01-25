@@ -1,0 +1,48 @@
+package com.greenfoxacademy.springherokutemplate.validator;
+
+import com.greenfoxacademy.springherokutemplate.model.TimeSlot;
+import com.greenfoxacademy.springherokutemplate.model.dto.BookSlotDTO;
+import com.greenfoxacademy.springherokutemplate.service.AtariCalendarService;
+import com.greenfoxacademy.springherokutemplate.service.BookingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import java.util.Optional;
+
+public class BookSlotDTOValidator implements Validator {
+
+  private BookingService bookingService;
+  private AtariCalendarService calendarService;
+
+  @Autowired
+  public BookSlotDTOValidator(BookingService bookingService, AtariCalendarService calendarService) {
+    this.bookingService = bookingService;
+    this.calendarService = calendarService;
+  }
+
+  @Override
+  public boolean supports(Class<?> clazz) {
+    return BookSlotDTO.class.equals(clazz);
+  }
+
+  @Override
+  public void validate(Object target, Errors errors) {
+    BookSlotDTO booking = (BookSlotDTO) target;
+
+    Long calendarId = booking.getCalendarId();
+    Long timeSlotId = booking.getTimeSlotId();
+
+    if (!calendarService.findById(calendarId).isPresent()) {
+      errors.rejectValue("calendarId", "INVALID_CAL", "Invalid calendar");
+    }
+
+    Optional<TimeSlot> timeSlot = bookingService.findById(timeSlotId);
+    if (!timeSlot.isPresent()) {
+      errors.rejectValue("timeSlotId", "INVALID_SLOT", "Invalid timeslot");
+    } else if (timeSlot.get().isBooked()) {
+      errors.rejectValue("timeSlotId", "SLOT_BOOKED", "This timeslot is already booked");
+    }
+
+  }
+}
