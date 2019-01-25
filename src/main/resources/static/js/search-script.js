@@ -1,30 +1,119 @@
-const locationlisturl = "http://localhost:8080/search/api/locationlist";
-const servicetypelisturl = "http://localhost:8080/search/api/servicetypesoflocation";
+// URLs for fetching data
+const locationListUrl = "http://localhost:8080/search/api/locationlist";
+const serviceTypeListUrl = "http://localhost:8080/search/api/servicetypesoflocation";
+const serviceProviderListUrl = "http://localhost:8080/search/api/serviceproviderssoflocation";
 
+// Document Elements
 const myLocationSelect = document.getElementById("locationSelect");
 const myServiceTypeSelect = document.getElementById("serviceTypeSelect");
+const myServiceProviderSelect = document.getElementById("serviceProviderSelect");
+const mySubmitBtn = document.getElementById("submitButton");
 const mySelectedInformation = document.getElementById("selectedInformation");
 
+// Arrays for fetched data
 const locationList = [];
-let selectedLocationServiceTypes = [];
+let mySelectedLocationCalendarIDs = [];
+let mySelectedServiceType = null;
+let mySelectedLocation = null;
 
+// Select fillers
 const fillLocationSelect = (data) => {
   Object.keys(data).forEach((key) => {
-    let newOption = document.createElement("option");
-    // console.log(data[key].name);
+    let newOption = document.createElement('option');
 
     newOption.text = data[key].name;
-    newOption.setAttribute('value', data[key].id);
+    // newOption.setAttribute('name', 'locationId');
+    myLocationSelect.setAttribute('value', data[key].id);
 
     locationList.push(data[key]);
 
     myLocationSelect.appendChild(newOption);
   })
 }
+
+const fillServiceTypeSelect = (data) => {
+  let newOption = document.createElement('option');
+
+  newOption.text = data.name;
+  // newOption.setAttribute('name', 'serviceTypeId');
+  myServiceTypeSelect.setAttribute('value', data.id);
+  newOption.setAttribute('value', data.id);
+
+  myServiceTypeSelect.appendChild(newOption);
+}
+
+const fillServiceProviderSelect = (data) => {
+  let newOption = document.createElement('option');
+
+  newOption.text = data.description;
+  // newOption.setAttribute('name', 'serviceProviderId');
+  myServiceProviderSelect.setAttribute('value', data.id);
+
+  myServiceProviderSelect.appendChild(newOption);
+}
+
+// Onchange Handler #1
+myLocationSelect.onchange = changeLocationSelectEventHandler;
+function changeLocationSelectEventHandler() {
+  myServiceTypeSelect.style.display = 'block';
+  myServiceProviderSelect.style.display = 'none';
+
+  mySelectedLocation = myLocationSelect.options[this.selectedIndex];
+  
+  addDefaultSelectOption(myServiceTypeSelect, 'service');
+
+  locationList.forEach(location => {
+    if (mySelectedLocation.innerText == location.name) {
+      locationInformationFiller(location.address);
+      mySelectedLocationCalendarIDs = location.atariCalendarIds;
+    }
+  });
+
+  fetcherFromCalendarIDs(`${serviceTypeListUrl}?`, fillServiceTypeSelect);
+}
+
+// Onchange Handler #2
+myServiceTypeSelect.onchange = changeServiceTypeSelectEventHandler;
+function changeServiceTypeSelectEventHandler() {
+  myServiceProviderSelect.style.display = 'block';
+  
+  mySelectedServiceType = myServiceTypeSelect.options[this.selectedIndex];
+
+  addDefaultSelectOption(myServiceProviderSelect, 'provider');
+
+  fetcherFromCalendarIDs(`${serviceProviderListUrl}?servicetypeid=${mySelectedServiceType.value}&`, fillServiceProviderSelect);
+}
+
+// Onchange Handler #3
+myServiceProviderSelect.onchange = changeSubmitButtonSelectEventHandler;
+function changeSubmitButtonSelectEventHandler() {
+  mySubmitBtn.style.display = 'block';
+}
+
+// Fetchers
 window.onload = () => {
-  fetch(locationlisturl)
+  fetch(locationListUrl)
     .then((resp) => (resp.json()))
     .then(fillLocationSelect);
+}
+
+function fetcherFromCalendarIDs(url, select) {
+  mySelectedLocationCalendarIDs.forEach(calendarId => {
+  fetch(`${url}calendarid=${calendarId}`)
+    .then((resp) => (resp.json()))
+    .then(select);
+  })
+}
+
+// Additional functions
+function addDefaultSelectOption(element, type) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
+  let newOption = document.createElement('option');
+  newOption.innerText = `Select a ${type} …`;
+  element.appendChild(newOption);
 }
 
 function locationInformationFiller(address) {
@@ -43,47 +132,4 @@ function locationInformationFiller(address) {
   newDivLocationAddress.appendChild(newH4AddressInfo);
 
   mySelectedInformation.appendChild(newDivLocationAddress);
-}
-
-myLocationSelect.onchange = changeLocationSelectEventHandler;
-
-function changeLocationSelectEventHandler() {
-  myServiceTypeSelect.style.display = "block";
-  mySelectedLocation = myLocationSelect.options[this.selectedIndex];
-  let mySelectedLocationCalendarIDs = [];
-
-  while (myServiceTypeSelect.firstChild) {
-    myServiceTypeSelect.removeChild(myServiceTypeSelect.firstChild);
-  }
-  let newOption = document.createElement('option');
-  newOption.innerText = 'Select a service …';
-  myServiceTypeSelect.appendChild(newOption);
-
-  locationList.forEach(location => {
-    if (mySelectedLocation.innerText == location.name) {
-      locationInformationFiller(location.address);
-      mySelectedLocationCalendarIDs = location.atariCalendarIds;
-    }
-  });
-
-  const fillServiceTypeSelect = (data) => {
-    let newOption = document.createElement('option');
-
-    newOption.text = data.name;
-    newOption.setAttribute('value', data.id);
-
-    myServiceTypeSelect.appendChild(newOption);
-
-    selectedLocationServiceTypes.push(data);
-  }
-
-  mySelectedLocationCalendarIDs.forEach(calendarId => {
-    fetch(`${servicetypelisturl}?calendarid=${calendarId}`)
-      .then((resp) => (resp.json()))
-      .then(fillServiceTypeSelect);
-  })
-}
-
-function changeServiceTypeSelectEventHandler() {
-  
 }

@@ -7,25 +7,15 @@
     <div class="container" role="main">
         <nav th:replace="th-fragments :: nav"></nav>
 
-        <!-- model: available locations, providers (of locations), service types (of locations), timeslots (of locations) -->
-
-        <!-- <form action="/search", method="POST">
-            <select>
-                <option th:each="location : ${locationList}"
-                        th:value="${location.getId()}" th:text="${location.getName()}">
-                </option>
-            </select>
-            <button>Search</button>
-        </form> -->
-
-        <form action="/search/", method="POST">
-            <select id="locationSelect">
+        <form action="/search/submit", method="POST">
+            <select name="locationId" id="locationSelect">
                 <option value="">Select a location …</option>
             </select>
-            <select id="serviceTypeSelect" style="display: none;">
+            <select name="serviceTypeId" id="serviceTypeSelect" style="display: none;">
             </select>
-            <select id="serviceProvider" style="display: none;">
+            <select name="serviceProviderId" id="serviceProviderSelect" style="display: none;">
             </select>
+            <input type="submit" id="submitButton" style="display: none;" value="Search">
         </form>
 
         <div id="selectedInformation"></div>
