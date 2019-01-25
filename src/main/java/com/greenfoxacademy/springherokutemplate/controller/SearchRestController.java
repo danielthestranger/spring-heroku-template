@@ -2,11 +2,13 @@ package com.greenfoxacademy.springherokutemplate.controller;
 
 import java.util.List;
 
-import com.greenfoxacademy.springherokutemplate.model.Location;
+import com.greenfoxacademy.springherokutemplate.model.ServiceType;
+import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
 import com.greenfoxacademy.springherokutemplate.service.LocationService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,9 +21,12 @@ public class SearchRestController {
   }
 
   @GetMapping("/locationlist")
-  public List<Location> getLocationList() {
-    return locationService.getAllLocations();
+  public List<LocationDTO> getLocationList() {
+    return locationService.getAllLocationDTOs();
   }
 
-  
+  @GetMapping("/servicetypesoflocation")
+  public ServiceType getSelectedLocationServiceTypes(@RequestParam(value = "calendarid", required = true) Long calendarId) {
+    return locationService.getServiceTypesFromAtariCalendarId(calendarId);
+  }
 }
