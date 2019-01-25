@@ -17,10 +17,10 @@
                 <tr>
                     <th>Begin Time</th>
                     <th>End Time</th>
-                    <th>Booked</th>
+                    <th>Already Booked</th>
                     <th>Comments</th>
                     <th>Booked By</th>
-                    <th>COMMAND</th>
+                    <th>Booking Options</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,8 +33,9 @@
                     <td>
                         <form th:unless="${timeSlotDTO.booked}" th:object="${bookSlotDTO}" method="post" action="#" th:action="@{/book}" class="form-inline">
                             <input type="hidden" name="timeSlotId" th:value="${timeSlotDTO.timeSlotId}"/>
-                            <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">Book now</button>
+                            <button type="submit" class="btn btn-success my-2 my-sm-0">Book now</button>
                         </form>
+                        <a th:if="${timeSlotDTO.booked}" href="#" class="btn btn-outline-secondary my-2 my-sm-0 disabled" role="button" aria-disabled="true">Cannot book</a>
                     </td>
                 </tr>
                 </tbody>

@@ -1,7 +1,9 @@
 package com.greenfoxacademy.springherokutemplate.service;
 
 import com.greenfoxacademy.springherokutemplate.model.AtariCalendar;
+import com.greenfoxacademy.springherokutemplate.model.Location;
 import com.greenfoxacademy.springherokutemplate.model.TimeSlot;
+import com.greenfoxacademy.springherokutemplate.model.dto.CalendarSummaryDTO;
 import com.greenfoxacademy.springherokutemplate.model.dto.TimeSlotDTO;
 import com.greenfoxacademy.springherokutemplate.repository.AtariCalendarRepository;
 import com.greenfoxacademy.springherokutemplate.repository.TimeSlotRepository;
@@ -19,11 +21,13 @@ public class AtariCalendarServiceImpl implements AtariCalendarService {
   private AtariCalendarRepository calendarRepository;
   private TimeSlotRepository timeSlotRepository;
 
+
   @Autowired
   public AtariCalendarServiceImpl(AtariCalendarRepository calendarRepository, TimeSlotRepository timeSlotRepository) {
     this.calendarRepository = calendarRepository;
     this.timeSlotRepository = timeSlotRepository;
   }
+
 
   @Override
   public Optional<AtariCalendar> findById(Long calendarId) {
@@ -42,6 +46,29 @@ public class AtariCalendarServiceImpl implements AtariCalendarService {
         timeSlotRepository.findAllByAtariCalendarAndBeginTimeAfterOrderByBeginTimeAsc(calendar.get(), LocalDateTime.now());
 
     return DTOsFromTimeSlots(timeSlots);
+  }
+
+  @Override
+  public List<CalendarSummaryDTO> findAllCalendarSummaries() {
+    List<AtariCalendar> allCalendars = calendarRepository.findAll();
+
+    List<CalendarSummaryDTO> allDtos = new ArrayList<>();
+    for (AtariCalendar calendar : allCalendars) {
+      allDtos.add(DTOFromCalendar(calendar));
+    }
+
+    return allDtos;
+  }
+
+  private CalendarSummaryDTO DTOFromCalendar(AtariCalendar calendar) {
+    CalendarSummaryDTO dto = new CalendarSummaryDTO();
+
+    dto.setId(calendar.getId());
+    dto.setLocationDescription(calendar.getLocation().getName());
+    dto.setServiceTypeDescription(calendar.getServiceType().getName());
+    dto.setProviderDescription(calendar.getAtariProvider().getDescription());
+
+    return dto;
   }
 
   private TimeSlotDTO DTOFromTimeSlot(TimeSlot timeSlot) {

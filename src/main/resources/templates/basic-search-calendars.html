@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="th-fragments :: head" />
+</head>
+<body>
+    <div class="container" role="main">
+        <nav th:replace="th-fragments :: nav"></nav>
+        <div class="page-header">
+            <h2>Available calendars</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+        <div th:if="${successMsg != null}" th:text="${successMsg}" class="alert alert-success" role="alert"></div>
+
+                <div class="row" th:each="calendarSummary : ${calendarSummaries}">
+                        <div class="col">
+                        <p>
+                            <span th:text="${calendarSummary.locationDescription}"></span><br>
+                            <span th:text="${calendarSummary.serviceTypeDescription}"></span><br>
+                            <span th:text="${calendarSummary.providerDescription}"></span><br>
+
+                        <a th:href="@{|/basicsearch/calendars/${calendarSummary.id}|}" class="btn btn-outline-primary my-2 my-sm-0" role="button">View appointments</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <script th:replace="th-fragments :: bootstrapscripts"></script>
+</body>
+</html>

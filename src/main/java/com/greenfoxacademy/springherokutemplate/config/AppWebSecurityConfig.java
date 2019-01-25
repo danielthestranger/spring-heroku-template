@@ -50,7 +50,7 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
                     .hasAuthority(KnownAuthorities.ROLE_USER)
                 .antMatchers("/manage/**")
                     .hasAuthority(KnownAuthorities.ROLE_MANAGER)
-                .antMatchers("/", "/search", "/search/**")
+                .antMatchers("/", "/search", "/search/**", "/basicsearch/**")
                     .permitAll()
             .and()
                 .formLogin()

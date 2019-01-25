@@ -39,14 +39,14 @@ public class BookingController {
     binder.setValidator(new BookSlotDTOValidator(bookingService));
   }
 
+  @GetMapping
+  public String showCalendars() {
+    return "redirect:/basicsearch/calendars";
+  }
 
   @GetMapping(value="/{calendarId}")
-  public String showCalendar(@PathVariable Long calendarId,
-                             Model model) {
-    List<TimeSlotDTO> timeSlotDTOs = atariCalendarService.findFutureTimeSlotsByCalendarId(calendarId);
-    model.addAttribute("timeSlotDTOs", timeSlotDTOs);
-    model.addAttribute("bookSlotDTO", new BookSlotDTO());
-    return "timeslots-by-calendar";
+  public String showCalendar(@PathVariable Long calendarId) {
+    return "redirect:/basicsearch/calendars/" + calendarId;
   }
 
   @PostMapping
