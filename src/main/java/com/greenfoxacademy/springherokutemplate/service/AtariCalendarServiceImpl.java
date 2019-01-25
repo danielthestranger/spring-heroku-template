@@ -51,8 +51,14 @@ public class AtariCalendarServiceImpl implements AtariCalendarService {
     dto.setBeginTime(timeSlot.getBeginTime());
     dto.setEndTime(timeSlot.getEndTime());
     dto.setBooked(timeSlot.isBooked());
-    dto.setComments("unknown");
-    dto.setBookedByName("unknown");
+
+    if (timeSlot.isBooked()) {
+      dto.setComments("unknown");
+      dto.setBookedByName("unknown");
+    } else {
+      dto.setComments("");
+      dto.setBookedByName("");
+    }
 
     return dto;
   }

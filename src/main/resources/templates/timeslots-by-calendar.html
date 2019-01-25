@@ -25,16 +25,15 @@
                 </thead>
                 <tbody>
                 <tr th:each="timeSlotDTO : ${timeSlotDTOs}">
-                    <td th:text="${timeSlotDTO.beginTime}"></td>
-                    <td th:text="${timeSlotDTO.endTime}"></td>
+                    <td th:text="${#temporals.format(timeSlotDTO.beginTime, 'dd-MMM-yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(timeSlotDTO.endTime, 'dd-MMM-yyyy HH:mm')}"></td>
                     <td th:text="${timeSlotDTO.booked}"></td>
-                    <td th:text="${timeSlotDTO.comments}" align="right"></td>
-                    <td th:text="${timeSlotDTO.bookedByName}" align="right"></td>
+                    <td th:text="${timeSlotDTO.comments}"></td>
+                    <td th:text="${timeSlotDTO.bookedByName}"></td>
                     <td>
-                        <form th:object="${bookSlotDTO}" method="post" action="#" th:action="@{/book}" class="form-inline">
+                        <form th:unless="${timeSlotDTO.booked}" th:object="${bookSlotDTO}" method="post" action="#" th:action="@{/book}" class="form-inline">
                             <input type="hidden" name="timeSlotId" th:value="${timeSlotDTO.timeSlotId}"/>
                             <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">Book now</button>
-                            <div th:if="${#fields.hasErrors('all')}" th:errors="*{all}" class="alert alert-danger" role="alert"></div>
                         </form>
                     </td>
                 </tr>
