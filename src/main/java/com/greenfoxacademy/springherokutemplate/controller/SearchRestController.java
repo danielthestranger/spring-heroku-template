@@ -2,6 +2,7 @@ package com.greenfoxacademy.springherokutemplate.controller;
 
 import java.util.List;
 
+import com.greenfoxacademy.springherokutemplate.model.AtariProvider;
 import com.greenfoxacademy.springherokutemplate.model.ServiceType;
 import com.greenfoxacademy.springherokutemplate.model.dto.LocationDTO;
 import com.greenfoxacademy.springherokutemplate.service.LocationService;
@@ -28,5 +29,11 @@ public class SearchRestController {
   @GetMapping("/servicetypesoflocation")
   public ServiceType getSelectedLocationServiceTypes(@RequestParam(value = "calendarid", required = true) Long calendarId) {
     return locationService.getServiceTypesFromAtariCalendarId(calendarId);
+  }
+  
+  @GetMapping("/serviceproviderssoflocation")
+  public AtariProvider getSelectedLocationServiceProvider(@RequestParam(value = "calendarid", required = true) Long calendarIdforProvider,
+  @RequestParam(value = "servicetypeid", required = true) Long servicetypeId) {
+    return locationService.getServiceProviderFromAtariCalendarAndServiceTypeId(calendarIdforProvider, servicetypeId);
   }
 }
