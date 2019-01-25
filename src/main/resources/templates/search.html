@@ -7,6 +7,8 @@
     <div class="container" role="main">
         <nav th:replace="th-fragments :: nav"></nav>
 
+        <div th:if="${successMsg != null}" th:text="${successMsg}" class="alert alert-success" role="alert"></div>
+
         <!-- model: available locations, providers (of locations), service types (of locations), timeslots (of locations) -->
 
         <!-- <form action="/search", method="POST">
