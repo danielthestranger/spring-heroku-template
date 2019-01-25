@@ -39,7 +39,7 @@ public class AppUserServiceImpl implements AppUserService {
     AppUser newUser = new AppUser(
                             regForm.getUsername(),
                             encodedPassword,
-                            true);
+                            true, regForm.getEmail());
 
     //TODO validate: user doesn't already exist
 

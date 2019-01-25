@@ -40,11 +40,12 @@ public class AppUser {
   private AppUser() {
   }
 
-  public AppUser(String username, String password, Boolean enabled) {
+  public AppUser(String username, String password, Boolean enabled, String email) {
     this();
     this.username = username;
     this.password = password;
     this.enabled = enabled;
+    this.email = email;
   }
 
   public void addAuthority(Authority authority) {
