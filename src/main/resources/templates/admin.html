@@ -47,6 +47,24 @@
   <a th:if="${newServicetype.name} != null" class="btn btn-info" href="/admin/">Cancel</a>
 </form>
   </div>
+  <br>
+  <h6>Atari providers</h6>
+  <div class="container">
+    <a th:each="atariprovider : ${atariproviders}" class="btn btn-success" style="border-radius: 1rem; margin-right: 10px"
+       th:href="@{${'/admin/' + atariprovider.id + '/editAtariProvider'}}"
+       th:text="${atariprovider.description}"></a>
+    <br>
+    <br>
+    <h6>Edit or add new Atari provider:</h6>
+    <form class="form-group form-control-lg" id="atariprovider" action="#" th:action="@{/admin/addAtariProvider}" th:object="${newAtariProvider}" method="post">
+      <input type="hidden" name="providerid" th:value="${newAtariProvider.id}"/>
+      <input type="text" name="newAtariProvider" th:value="${newAtariProvider.description}"/>
+      <input type="submit" class="btn btn-primary" style="margin-left: 5px" value="Submit"/>
+      <!--<a th:if="${newAtariProvider.description} != null" class="btn btn-danger"-->
+         <!--th:href="'/admin/' + ${newAtariProvider.id} + '/deleteAtariProvider'">Delete</a>-->
+      <a th:if="${newAtariProvider.description} != null" class="btn btn-info" href="/admin/">Cancel</a>
+    </form>
+  </div>
 <br>
 
 </div>
