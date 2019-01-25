@@ -1,6 +1,7 @@
 package com.greenfoxacademy.springherokutemplate.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Location {
 
   @Id
@@ -31,4 +33,7 @@ public class Location {
     this.atariCalendars = atariCalendarList;
   }
 
+  public Location(String name) {
+    this.name = name;
+  }
 }

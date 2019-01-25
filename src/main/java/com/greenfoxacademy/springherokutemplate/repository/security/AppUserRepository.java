@@ -6,7 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+import java.util.List;
+
 @Repository
-public interface AppUserRepository extends CrudRepository<AppUser, String> {
+public interface AppUserRepository extends CrudRepository<AppUser, Long> {
   Optional<AppUser> findByUsername(String username);
+  List<AppUser> findAll();
 }

@@ -9,5 +9,8 @@ public interface ServiceTypeRepository extends CrudRepository<ServiceType, Long>
 
   List<ServiceType> findAll();
 
+  ServiceType findAllById(Long id);
+
   ServiceType findByName(String newName);
+  
 }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface AtariCalendarRepository extends CrudRepository<AtariCalendar, Long> {
 
   List<AtariCalendar> findAll();
+
+  AtariCalendar findAllById(Long id);
 }

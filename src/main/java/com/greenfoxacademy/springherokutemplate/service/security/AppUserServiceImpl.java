@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,14 +31,15 @@ public class AppUserServiceImpl implements AppUserService {
   }
 
   @Override
-  public AppUser createDefaultUser(RegistrationForm regForm) {
+  public AppUser createDefaultUser(RegistrationForm regForm) throws IllegalArgumentException {
+    if (userExists(regForm.getEmail(), regForm.getUsername())) {
+      throw new IllegalArgumentException("User already exists");
+    }
     String encodedPassword = passwordEncoder.encode(regForm.getPassword());
     AppUser newUser = new AppUser(
                             regForm.getUsername(),
                             encodedPassword,
-                            true);
-
-    //TODO validate: user doesn't already exist
+                            true, regForm.getEmail());
 
     newUser.addAuthority(getDefaultAuthority());
 
@@ -64,5 +66,18 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     return defaultAuthority.get();
+  }
+
+  public List<AppUser> allUsers() {
+    return userRepository.findAll();
+  }
+
+  private boolean userExists(String email, String username) {
+    for (int i = 0; i < allUsers().size(); i++) {
+      if (allUsers().get(i).getEmail().equals(email) || allUsers().get(i).getUsername().equals(username)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
