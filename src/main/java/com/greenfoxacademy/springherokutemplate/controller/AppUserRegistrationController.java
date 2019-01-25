@@ -3,7 +3,6 @@ package com.greenfoxacademy.springherokutemplate.controller;
 import com.greenfoxacademy.springherokutemplate.model.dto.RegistrationForm;
 import com.greenfoxacademy.springherokutemplate.service.security.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
