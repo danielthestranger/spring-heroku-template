@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="th-fragments :: head" />
+</head>
+<body>
+<div class="container" role="main">
+    <nav th:replace="th-fragments :: nav"></nav>
+    <div class="page-header">
+        <h2>Time Slots for this Calendar</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Begin Time</th>
+                    <th>End Time</th>
+                    <th>Booked</th>
+                    <th>Comments</th>
+                    <th>Booked By</th>
+                    <th>COMMAND</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="timeSlotDTO : ${timeSlotDTOs}" th:object="${timeSlotDTO}">
+                    <td th:text="${#temporals.format(*{beginTime}, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(*{endTime}, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="*{booked}"></td>
+                    <td th:text="*{comments}" align="right"></td>
+                    <td th:text="*{bookedByName}" align="right"></td>
+                    <td>
+                        <form method="post" action="#" th:action="@{/book}" class="form-inline">
+                            <input type="hidden" th:field="*{timeSlotId}"/>
+                            <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">Book now</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script th:replace="th-fragments :: bootstrapscripts"></script>
+</body>
+</html>

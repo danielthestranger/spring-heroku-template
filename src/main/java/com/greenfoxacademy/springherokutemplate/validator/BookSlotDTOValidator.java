@@ -30,12 +30,7 @@ public class BookSlotDTOValidator implements Validator {
   public void validate(Object target, Errors errors) {
     BookSlotDTO booking = (BookSlotDTO) target;
 
-    Long calendarId = booking.getCalendarId();
     Long timeSlotId = booking.getTimeSlotId();
-
-    if (!calendarService.findById(calendarId).isPresent()) {
-      errors.rejectValue("calendarId", "INVALID_CAL", "Invalid calendar");
-    }
 
     Optional<TimeSlot> timeSlot = bookingService.findById(timeSlotId);
     if (!timeSlot.isPresent()) {

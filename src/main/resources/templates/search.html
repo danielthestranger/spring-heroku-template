@@ -9,6 +9,8 @@
 
         <!-- model: available locations, providers (of locations), service types (of locations), timeslots (of locations) -->
 
+        <div th:if="${successMsg != null}" th:text="${successMsg}" class="alert alert-success" role="alert"></div>
+
         <form action="/search", method="POST">
             <label for="Location">Location: </label>
             <select>

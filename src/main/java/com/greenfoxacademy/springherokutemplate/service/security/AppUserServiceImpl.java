@@ -47,7 +47,7 @@ public class AppUserServiceImpl implements AppUserService {
   @Override
   public AppUser fromPrincipal(Principal principal) {
     String username = principal.getName();
-    Optional<AppUser> user = userRepository.findByUserName(username);
+    Optional<AppUser> user = userRepository.findByUsername(username);
 
     //TODO handle user not found
 
