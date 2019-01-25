@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,23 +30,18 @@ public class AtariCalendar {
 
   private String comment;
 
-  @ElementCollection
-  @CollectionTable(name = "calendar_timeslot")
-  @org.hibernate.annotations.CollectionId(
-      columns = @Column(name = "slot_id"),
-      type = @org.hibernate.annotations.Type(type = "long"),
-      generator = "TIMESLOT_ID_GENERATOR")
-  private Collection<TimeSlot> timeSlotSet = new ArrayList<>();
+  @OneToMany(mappedBy = "atariCalendar")
+  private Collection<TimeSlot> timeSlots = new ArrayList<>();
 
 
-  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Set<TimeSlot> timeSlotSet) {
+  public AtariCalendar(ServiceType serviceType, AtariProvider atariProvider, String comment, Collection<TimeSlot> timeSlots) {
     this.serviceType = serviceType;
     this.atariProvider = atariProvider;
     this.comment = comment;
-    this.timeSlotSet = timeSlotSet;
+    this.timeSlots = timeSlots;
   }
 
-  public void setTimeSlotSet(Set<TimeSlot> timeSlotSet) {
-    this.timeSlotSet = timeSlotSet;
+  public void setTimeSlotSet(Collection<TimeSlot> timeSlots) {
+    this.timeSlots = timeSlots;
   }
 }

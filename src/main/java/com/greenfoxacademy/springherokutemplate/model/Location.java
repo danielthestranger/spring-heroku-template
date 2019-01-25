@@ -33,4 +33,7 @@ public class Location {
     this.atariCalendars = atariCalendarList;
   }
 
+  public Location(String name) {
+    this.name = name;
+  }
 }

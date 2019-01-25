@@ -11,4 +11,6 @@ public interface AtariProviderRepository extends CrudRepository<AtariProvider, L
 
   AtariProvider findAllById(Long id);
   
+  AtariProvider findByDescription(String description);
+  
 }

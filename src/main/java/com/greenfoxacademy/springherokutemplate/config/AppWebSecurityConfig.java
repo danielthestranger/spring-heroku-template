@@ -46,9 +46,11 @@ public class AppWebSecurityConfig  extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/home/**")
+                .antMatchers("/home/**", "/book/**", "/profile/**")
                     .hasAuthority(KnownAuthorities.ROLE_USER)
-                .antMatchers("/", "/**", "/search", "/search/**")
+                .antMatchers("/manage/**", "/book/**", "/profile/**")
+                    .hasAuthority(KnownAuthorities.ROLE_MANAGER)
+                .antMatchers("/", "/search", "/search/**")
                     .permitAll()
             .and()
                 .formLogin()

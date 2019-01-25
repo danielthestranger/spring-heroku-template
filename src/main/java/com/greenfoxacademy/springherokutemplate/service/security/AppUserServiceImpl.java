@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +31,6 @@ public class AppUserServiceImpl implements AppUserService {
   }
 
   @Override
-  public AppUser save(AppUser user) {
-      return userRepository.save(user);
-  }
-
-  @Override
   public AppUser createDefaultUser(RegistrationForm regForm) throws IllegalArgumentException {
     if (userExists(regForm.getEmail(), regForm.getUsername())) {
       throw new IllegalArgumentException("User already exists");
@@ -48,6 +44,16 @@ public class AppUserServiceImpl implements AppUserService {
     newUser.addAuthority(getDefaultAuthority());
 
     return userRepository.save(newUser);
+  }
+
+  @Override
+  public AppUser fromPrincipal(Principal principal) {
+    String username = principal.getName();
+    Optional<AppUser> user = userRepository.findByUsername(username);
+
+    //TODO handle user not found
+
+    return user.get();
   }
 
   private Authority getDefaultAuthority() {

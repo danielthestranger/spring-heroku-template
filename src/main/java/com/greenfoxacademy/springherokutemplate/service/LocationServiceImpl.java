@@ -30,11 +30,13 @@ public class LocationServiceImpl implements LocationService {
     this.atariProviderRepository = atariProviderRepository;
   }
 
+  @Override
   public List<Location> getAllLocations() {
     List<Location> locationList = locationRepository.findAll();
     return locationList;
   }
 
+  @Override
   public List<LocationDTO> getAllLocationDTOs() {
     List<Location> locationList = getAllLocations();
     List<LocationDTO> locationDTOList = new ArrayList<>();
@@ -46,6 +48,7 @@ public class LocationServiceImpl implements LocationService {
     return locationDTOList;
   }
 
+  @Override
   public LocationDTO locationToLocationDTOConverter(Location location) {
     LocationDTO locationDTO = new LocationDTO();
     List<Long> atariCalendarIds = new ArrayList<>();
@@ -63,6 +66,7 @@ public class LocationServiceImpl implements LocationService {
     return locationDTO;
   }
   
+  @Override
   public List<AtariCalendar> getAtariCalendarsFromIds(List<Long> atariCalendarIds) {
     List<AtariCalendar> atariCalendars = new ArrayList<>();
 
@@ -73,18 +77,22 @@ public class LocationServiceImpl implements LocationService {
     return atariCalendars;
   }
   
+  @Override
   public AtariCalendar getAtariCalendarFromId(Long atariCalendarId) {
     return atariCalendarRepository.findAllById(atariCalendarId);
   }
   
+  @Override
   public ServiceType getServiceTypeFromId(Long serviceTypeId) {
     return serviceTypeRepository.findAllById(serviceTypeId);
   }
   
+  @Override
   public AtariProvider getAtariProviderFromId(Long atariProviderId) {
     return atariProviderRepository.findAllById(atariProviderId);
   }
   
+  @Override
   public List<ServiceType> getServiceTypesFromAtariCalendarIds(List<Long> atariCalendarIds) {
     List<ServiceType> serviceTypeList = new ArrayList<>();
 
@@ -98,6 +106,7 @@ public class LocationServiceImpl implements LocationService {
     return serviceTypeList;
   }
 
+  @Override
   public ServiceType getServiceTypesFromAtariCalendarId(Long atariCalendarId) {
       AtariCalendar atariCalendar = getAtariCalendarFromId(atariCalendarId);
       ServiceType serviceType = getServiceTypeFromId(atariCalendar.getServiceType().getId());
@@ -105,6 +114,7 @@ public class LocationServiceImpl implements LocationService {
     return serviceType;
   }
 
+  @Override
   public AtariProvider getServiceProviderFromAtariCalendarAndServiceTypeId(Long atariCalendarId, Long serviceTypeId) {
     AtariCalendar atariCalendar = getAtariCalendarFromId(atariCalendarId);
     ServiceType serviceType = getServiceTypeFromId(serviceTypeId);
@@ -114,5 +124,40 @@ public class LocationServiceImpl implements LocationService {
 	    return atariProvider;
     }
     return null;
+  }
+
+  @Override
+  public void saveLocation(Location location) {
+    locationRepository.save(location);
+  }
+
+  @Override
+  public void deleteLocation(Long id) {
+    locationRepository.delete(locationRepository.findById(id).orElse(null));
+  }
+
+  @Override
+  public Location findById(Long id) {
+    return locationRepository.findById(id).orElse(null);
+  }
+
+  @Override
+  public Location findCreateOrUpdate(String newName, Long id) {
+    if (newName == null || newName.isEmpty()) {
+      throw new NullPointerException("Attribute name is null or empty");
+    }
+    if (id == null) {
+      Location savedLocation = locationRepository.findByName(newName);
+      if (savedLocation == null) {
+        Location location = new Location(newName);
+        savedLocation = locationRepository.save(location);
+        return savedLocation;
+      } else if (savedLocation.getName().equals(newName)) {
+        return savedLocation;
+      }
+    }
+    Location updateLocation = locationRepository.findById(id).orElse(null);
+    updateLocation.setName(newName);
+    return locationRepository.save(updateLocation);
   }
 }
