@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CalendarSummaryDTO {
   private Long id;
+  private String name;
   private String locationDescription;
   private String serviceTypeDescription;
   private String providerDescription;

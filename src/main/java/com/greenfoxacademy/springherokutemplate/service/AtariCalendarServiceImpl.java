@@ -70,6 +70,7 @@ public class AtariCalendarServiceImpl implements AtariCalendarService {
     CalendarSummaryDTO dto = new CalendarSummaryDTO();
 
     dto.setId(calendar.getId());
+    dto.setName(calendar.getName());
     dto.setLocationDescription(calendar.getLocation().getName());
     dto.setServiceTypeDescription(calendar.getServiceType().getName());
     dto.setProviderDescription(calendar.getAtariProvider().getDescription());

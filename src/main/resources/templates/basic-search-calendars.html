@@ -18,6 +18,7 @@
                 <div class="row" th:each="calendarSummary : ${calendarSummaries}">
                         <div class="col">
                         <p>
+                            <span th:text="${calendarSummary.name}"></span><br>
                             <span th:text="${calendarSummary.locationDescription}"></span><br>
                             <span th:text="${calendarSummary.serviceTypeDescription}"></span><br>
                             <span th:text="${calendarSummary.providerDescription}"></span><br>

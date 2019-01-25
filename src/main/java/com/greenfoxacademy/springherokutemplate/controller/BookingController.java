@@ -61,6 +61,6 @@ public class BookingController {
     }
     bookingService.bookSlot(principal, booking);
     ra.addFlashAttribute("successMsg", "Appointment booked");
-    return "redirect:/search";
+    return "redirect:/basicsearch/calendars";
   }
 }
