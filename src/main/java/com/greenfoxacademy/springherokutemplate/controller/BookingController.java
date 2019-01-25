@@ -35,6 +35,7 @@ public class BookingController {
                              Model model) {
     List<TimeSlotDTO> timeSlotDTOs = atariCalendarService.findFutureTimeSlotsByCalendarId(calendarId);
     model.addAttribute("timeSlotDTOs", timeSlotDTOs);
+    model.addAttribute("bookSlotDTO", new BookSlotDTO());
     return "timeslots-by-calendar";
   }
 
